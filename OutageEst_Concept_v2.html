@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- TO DO LIST
+
+    * CHANGE ALERTS TO A VERTICAL MODAL -->
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="icon" type=".gif" href="https://mcpolichette.github.io/Super_Hero_Giphy_API/images/markbounce.gif">
+    <style>
+        /* body {   } */
+
+        ul {
+            font-size: 10px
+        }
+
+        .reportFont {
+            font-size: 10px;
+        }
+
+        .centered {
+            text-align: center;
+        }
+
+        .max-width {
+            max-width: 100%;
+        }
+    </style>
+    <title>Outage Estimate -Automatron</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item ">
+                        <h2 class="accordion-header " id="headingOne">
+                            <button class="accordion-button " type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Outage Information <strong> (STEP 1)</strong>
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="row g-3">
+                                    <h4>Outage Estimate Testing</h4>
+                                    <!-- <button type="button" onclick=" window.open('https://spoti.fi/3wq9qIU','_blank')"
+                                        class="btn btn-outline-secondary btn-sm">Testing Button - Populate random
+                                        Merchant Data
+                                        (experimental)</button> -->
+                                    <button class='btn-outline-success' onclick='testValues()'>Testing Button - POPULATE
+                                        WITH SOLE
+                                        FITNESS
+                                        VALUES</button>
+                                    <div class="col-md-5">
+                                        <label for="merchantId" class="form-label">Merchant ID </label>
+                                        <input type="text" class="form-control " id="merchantId" value="" required>
+                                        <label for="merchantName" class="form-label">Merchant Name</label>
+                                        <input type="text" class="form-control" id="merchantName" value="" required>
+                                        <br><br>
+                                        <div class="input-group">
+                                            <label for="networkCommission" class="form-label">Network
+                                                Commission:</label>
+                                            <input type="text" class="align-right" id="networkCommission" value=""
+                                                requiredclass="form-control"
+                                                aria-label="Text input with dropdown button">
+                                            <span class="input-group-text">%</span>
+                                        </div>
+                                        <div style='font-size: small;'>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="networkPercentage"
+                                                    id="percentOfSale" value="option1" checked>
+                                                <label class="form-check-label" for="percentOfSale">
+                                                    Percent of Sale (Default)
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="networkPercentage"
+                                                    id="percentOfAffCom" value="option2">
+                                                <label class="form-check-label" for="percentOfAffCom">
+                                                    Percent of Affiliate Commission (uncommon)
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-5">
+                                        <label for="outageStartDate" class="form-label">Outage Start Date</label>
+                                        <input type="date" class="form-control" id="outageStartDate" required>
+
+                                        <label for="outageEndDate" class="form-label">Outage End Date</label>
+                                        <input type="date" class="form-control" id="outageEndDate" required><br>
+                                        <br>
+                                        <label for="affiliateCount" class="form-label">Number of Affiliates</label>
+                                        <input type="text" class="form-control" id="affiliateCount" value="20" required>
+                                        <span id="passwordHelpInline" class="form-text">
+                                            default 20
+                                        </span>
+                                        <br>
+                                    </div>
+
+                                    <div class="d-grid gap-2 col-6 mx-auto">
+                                        <button class="btn btn-primary  " id='firstSubmit'
+                                            onclick='validateFirstStep()'>
+                                            To
+                                            Submit
+                                            Vaules</button>
+                                    </div>
+                                    <div id='hidebutton1' class="d-grid gap-2  col-6 mx-auto">
+                                        <button class="btn disabled btn-success" id='firstStepComplete' type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                            onclick='runReport(15)' aria-expanded="flase"
+                                            aria-controls="collapseTwo">NEXT
+                                            STEP</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo" aria-expanded="flase" aria-controls="collapseTwo">
+                                Baseline Information <strong>(STEP 2)</strong>
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <p><strong>Determine the Baseline period for the outage.</strong>
+                                </p>In our standard contract,
+                                we define this as a 3-week period immediately before the outage.
+                                </p>
+                                <p>
+                                    However, in different cases this may not work well; for longer outages, or shorter
+                                    outages. Generally, we want to compare the outage period to 3+ times the same length
+                                    of
+                                    period where they were tracking. (This ensures a smoother / averaged estimate.)
+                                </p>
+                                <p>
+                                    Below we've selected the default baseline period. If you wish to use different
+                                    Dates, please specify in the date inserts below:</p>
+                                <div class="alert text-center alert-danger" id="baselineDates" role="alert">
+                                    <strong> NO OUTAGE DATES HAVE BEEN SELECTED</strong>
+
+                                </div>
+                                <p>If the above dates are insufficient, please click below, and want to choose new
+                                    dates. click below</p>
+                                <div class='d-grid gap-2 col-6 mx-auto'>
+                                    <button class='btn btn-secondary' onclick='show_new_baseline()'>Select Different
+                                        Dates</button>
+                                </div>
+                                <hr>
+                                <div class="row collapse" id="newBaseLineSelection">
+                                    <div class='d-grid gap-2 col-8 mx-auto'>
+                                        <label for="baselineStartDate" class="form-label">Baseline Start Date</label>
+                                        <input type="date" class="form-control " id="baselineStartDate" required>
+
+                                        <label for="baselineEndDate" class="form-label">Baseline End Date</label>
+                                        <input type="date" class="form-control " id="baselineEndDate" required>
+
+
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="baselineChoice"
+                                                id="chooseSuggestedBaseline" checked>
+                                            <label class="form-check-label" for="chooseSuggestedBaseline">
+                                                Use Suggested Baseline (dates above)
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="baselineChoice"
+                                                id="chooseNewBaseLine">
+                                            <label class="form-check-label" for="chooseNewBaseLine">
+                                                Use New Baseline (selected dates)
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+
+                                <div class="row justify-content-center">
+                                    <h5>Select Commission Option</h5>
+                                    <div class="col-5 ">
+                                        <p> When the Batch Sales report is submitted, the Affiliate's base commission
+                                            will be applied to all
+                                            submitted transactions. For this report, you can choose to use one base
+                                            commission rate, which will be
+                                            applied to all Affiliates in the Affiliate Table.</p>
+                                        <p>Alternatively, you can download the Merchant's Active Affiliates to apply the
+                                            Affiliate's current
+                                            commission rate to the report.</p>
+                                    </div>
+
+                                    <div class="col-5 ">
+                                        <p>Upload list of active affiliates from the Active Affiliates tab found on the
+                                            homepage. This will set the correct
+                                            commission rates in the estimate.</p>
+
+                                        <label for="AffCommission" class="form-label"> Use one Base Commission for All
+                                            Affiliates</label>
+                                        <div class="input-group ">
+                                            <div class="input-group-text">
+                                                <input class="max-width form-check-input mt-0" type="radio"
+                                                    id="uniformBaseCommission" name="AffCommission"
+                                                    value="universal_rate">
+                                            </div>
+                                            <input type="text" class="align-right" id='universal_affiliate_commission'
+                                                value="0" requiredclass="form-inline">
+                                            <span class="input-group-text">%</span>
+                                        </div>
+                                        <label for="AffCommission" class="form-label"> Upload Affiliate Commission
+                                            rates</label>
+                                        <div class="input-group max-width ">
+                                            <div class="input-group-text">
+                                                <input class="max-width form-check-input mt-0" type="radio"
+                                                    id="individualBaseCommission" name="AffCommission"
+                                                    value="individual_rate"
+                                                    aria-label="Radio button for following text input">
+                                            </div>
+                                            <input class="form-inline alert-danger" type="file"
+                                                onchange='readFile(this)' id="affiliateFormFile">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <p>To find the Active Affiliates report, Log in as the Merchant on the Dashboard and
+                                        navigate:
+                                    </p>
+                                    <p><strong> Affiliates > Affiliate
+                                            Program Applications > Affiliate
+                                            Status: ACTIVE > Download Affiliates (button) </strong>
+                                    </p>
+                                    <p>Please download as a .CSV file.</p>
+                                </div>
+                                <hr>
+                                <div class='row'>
+                                    <div class="d-grid gap-2 col-6 mx-auto">
+                                        <button class="btn btn-primary  " id='secondSubmit'
+                                            onclick='validateSecondStep()'>
+                                            To
+                                            Submit
+                                            Vaules</button>
+                                    </div>
+                                    <div id='hidebutton1' class="d-grid gap-2  col-6 mx-auto">
+                                        <button class="btn disabled btn-success" id='SecondStepComplete' type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                                            onclick='runReport(1)' aria-expanded="false"
+                                            aria-controls="collapseThree">BUILD TABLES</button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Outage Estimate Report
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class=container>
+                                    <div class=row>
+                                        <div class=col>
+                                            <table id='merchantTable'
+                                                class="table table-bordered border-primary centered table-sm">
+                                                <tbody></tbody>
+                                            </table>
+                                            <p class='reportFont'>Compares the outage period with a statistically
+                                                similar "baseline" period
+                                                from the past. Per-affiliate sale estimations calculated based on
+                                                affiliate
+                                                clickthroughs: est. total program sales times affiliate clicks / overall
+                                                clicks; affiliate clicks times program's baseline AOV and conversion
+                                                rate;
+                                                and the average of the two methods. Any actual sales during the outage
+                                                period are removed from the calculations.</p>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item"><strong>Reports Used for this
+                                                        Estimate</strong>
+                                                </li>
+                                                <li id='outageFileName' class="list-group-item">outage filename</li>
+                                                <li id='baselineFileName' class="list-group-item">baseline filename</li>
+                                                <li id='affiliateReportFileName' class="list-group-item">affiliate
+                                                    report
+                                                </li>
+                                            </ul>
+                                            <br>
+                                        </div>
+                                        <div class=col style="font-size: small;">
+                                            <table id='baselineTable'
+                                                class="table baseData table-bordered border-primary table-sm">
+                                                <tbody> </tbody>
+                                            </table>
+                                            <table id='outageTable'
+                                                class="table table-sm table-bordered border-primary baseData table-sm">
+                                                <tbody> </tbody>
+                                            </table>
+                                        </div>
+                                        <hr>
+                                        <div class=col-12 id="affiliateTable">
+                                            <h6> Break down of Affiliates with most clicks during the outage.</h6>
+                                            <table style="font-size:x-small; font-weight: bold; text-align:right"
+                                                class="table  align-middle table-bordered table-sm  border-primary"
+                                                id="affTable"></table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn collapse btn-primary " type="button" id='makePDF'
+                                onclick='generatePDF()'>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-file-pdf-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M5.523 10.424c.14-.082.293-.162.459-.238a7.878 7.878 0 0 1-.45.606c-.28.337-.498.516-.635.572a.266.266 0 0 1-.035.012.282.282 0 0 1-.026-.044c-.056-.11-.054-.216.04-.36.106-.165.319-.354.647-.548zm2.455-1.647c-.119.025-.237.05-.356.078a21.035 21.035 0 0 0 .5-1.05 11.96 11.96 0 0 0 .51.858c-.217.032-.436.07-.654.114zm2.525.939a3.888 3.888 0 0 1-.435-.41c.228.005.434.022.612.054.317.057.466.147.518.209a.095.095 0 0 1 .026.064.436.436 0 0 1-.06.2.307.307 0 0 1-.094.124.107.107 0 0 1-.069.015c-.09-.003-.258-.066-.498-.256zM8.278 4.97c-.04.244-.108.524-.2.829a4.86 4.86 0 0 1-.089-.346c-.076-.353-.087-.63-.046-.822.038-.177.11-.248.196-.283a.517.517 0 0 1 .145-.04c.013.03.028.092.032.198.005.122-.007.277-.038.465z" />
+                                    <path fill-rule="evenodd"
+                                        d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm.165 11.668c.09.18.23.343.438.419.207.075.412.04.58-.03.318-.13.635-.436.926-.786.333-.401.683-.927 1.021-1.51a11.64 11.64 0 0 1 1.997-.406c.3.383.61.713.91.95.28.22.603.403.934.417a.856.856 0 0 0 .51-.138c.155-.101.27-.247.354-.416.09-.181.145-.37.138-.563a.844.844 0 0 0-.2-.518c-.226-.27-.596-.4-.96-.465a5.76 5.76 0 0 0-1.335-.05 10.954 10.954 0 0 1-.98-1.686c.25-.66.437-1.284.52-1.794.036-.218.055-.426.048-.614a1.238 1.238 0 0 0-.127-.538.7.7 0 0 0-.477-.365c-.202-.043-.41 0-.601.077-.377.15-.576.47-.651.823-.073.34-.04.736.046 1.136.088.406.238.848.43 1.295a19.707 19.707 0 0 1-1.062 2.227 7.662 7.662 0 0 0-1.482.645c-.37.22-.699.48-.897.787-.21.326-.275.714-.08 1.103z" />
+                                </svg> - Save as a PDF </button>
+                            <button class="btn collapse btn-primary" type="button" id='makeBatchSalesDoc'
+                                onclick='buildBatchSales()'> <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                    height="16" fill="currentColor" class="bi bi-file-spreadsheet" viewBox="0 0 16 16">
+                                    <path
+                                        d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v4h10V2a1 1 0 0 0-1-1H4zm9 6h-3v2h3V7zm0 3h-3v2h3v-2zm0 3h-3v2h2a1 1 0 0 0 1-1v-1zm-4 2v-2H6v2h3zm-4 0v-2H3v1a1 1 0 0 0 1 1h1zm-2-3h2v-2H3v2zm0-3h2V7H3v2zm3-2v2h3V7H6zm3 3H6v2h3v-2z" />
+                                </svg> - Export A Batch Sales Report </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /////////////////////////////////////SCRIPTS////////////////////// -->
+    <script>
+        var API_KEY = AVANTLINK_API_KEY;
+        var affiliates = [];
+        var affarr = [];
+        var outage = {
+            value: 'outage',
+            total_sales: 0,
+            total_sales_count: 0,
+            total_clicks: 0,
+        };
+        var baseline = { value: "baseline", };
+        var merchant = { affiliate_count: 20 };
+        var secondButtonBoolean = false;
+        function testValues() {
+            document.getElementById('merchantName').value = 'Sole Fitness';
+            document.getElementById('merchantId').value = '11149';
+            document.getElementById('networkCommission').value = '2';
+            document.getElementById("outageStartDate").value = '2022-03-09'
+            document.getElementById("outageEndDate").value = '2022-04-18'
+            outage.estimatedSales = 10000
+            outage.discrepency = 5050
+            outage.adjusted_discrepency = 11111.11
+        };
+        function validateFirstStep() {
+            validationCheck(['outageStartDate', 'outageEndDate', 'merchantName', 'merchantId', 'networkCommission', 'affiliateCount',], 'firstSubmit', 'firstStepComplete')
+        };
+        function validateSecondStep() {
+            let date_check = document.getElementById("chooseNewBaseLine").checked
+            if (date_check) {
+                baseline.date_start = document.getElementById("baselineStartDate").value
+                baseline.date_end = document.getElementById("baselineEndDate").value
+                baseline.date_start_display = new Date(baseline.date_start);
+                baseline.date_start_display.setDate(baseline.date_start_display.getDate());
+                baseline.date_end_display = new Date(baseline.date_end);
+                baseline.date_end_display.setDate(baseline.date_end_display.getDate());
+                console.log(baseline)
+
+            }
+            console.log(date_check)
+            let commission_check = document.querySelector('input[name="AffCommission"]:checked');
+            if (commission_check)
+                switch (commission_check.value) {
+                    case 'universal_rate':
+                        validationCheck(['universal_affiliate_commission',], 'secondSubmit', 'SecondStepComplete')
+                        merchant.universal_commission = (Number(document.getElementById('universal_affiliate_commission').value) / 100)
+                        if (merchant.universal_commission) {
+                            affiliates.forEach(affiliate => {
+                                affiliate.commissionRate = merchant.universal_commission
+                            })
+                            console.log(affiliates);
+                            console.log(merchant)
+                        };
+                        break
+                    case 'individual_rate':
+                        validationCheck(['affiliateFormFile'], 'secondSubmit', 'SecondStepComplete')
+                        break
+                }
+            else {
+                console.log("NULL")
+                alert('please set Affiliate Commission, or upload Affiliate Commission Rates')
+            };
+        };
+        function validationCheck(arr, btn_id, new_button) {
+            let arrCheck = 0
+            arr.forEach(id => {
+                if (document.getElementById(id).value) {
+                    successify(id)
+                }
+                else {
+                    document.getElementById(id).classList.add("alert-danger")
+                    arrCheck = 1;
+                    let btn = document.getElementById(new_button)
+                    btn.classList.add("disabled")
+                };
+            });
+            console.log("Zero is good ==> " + arrCheck)
+            if (arrCheck) { }
+            else {
+                let btn = document.getElementById(new_button)
+                btn.classList.remove("disabled")
+                btn.classList.remove("collapse")
+                document.getElementById(btn_id).innerHTML = "Click to Update"
+                //btn.classList.remove("disabled")
+            };
+        };
+        function show_new_baseline() {
+            document.getElementById('newBaseLineSelection').classList.remove("collapse")
+            document.getElementById('chooseNewBaseLine').checked = true
+
+        };
+        function runReport(report_id) {
+            outage.date_start = document.getElementById("outageStartDate").value;
+            outage.date_end = document.getElementById("outageEndDate").value;
+            startDate = outage.date_start;
+            endDate = outage.date_end;
+            switch (report_id) {
+                case 1:
+                    if (baseline.date_start) {
+                        startDate = baseline.date_start
+                        endDate = baseline.date_end
+                    }
+                    else { alert("No Baseline Dates exist \n This error should never apear.") }
+                    let x = document.getElementById('chooseSuggestedBaseline').checked
+                    switch (document.getElementById('chooseSuggestedBaseline').checked) {
+                        case true:
+                            startDate = baseline.date_start
+                            endDate = baseline.date_end
+                            break
+                        case false:
+                            startDate = document.getElementById('baselineStartDate').value
+                            endDate = document.getElementById('baselineEndDate').value
+                            break
+                    }
+                    break
+                case 15:
+                    startDate = outage.date_start
+                    endDate = outage.date_end
+                    break
+            };
+            console.log(startDate, endDate)
+            merchant.name = document.getElementById('merchantName').value;
+            merchant.id = document.getElementById('merchantId').value;
+            merchant.affiliate_count = Number(document.getElementById('affiliateCount').value);
+            merchant.network_commission = (document.getElementById("networkCommission").value)
+            if (document.getElementById("percentOfSale").checked) {
+                console.log("Chosen the Default Percent of Sale");
+                merchant.nc_display = merchant.network_commission + "% of Sale"
+            };
+            if (document.getElementById("percentOfAffCom").checked) {
+                console.log("Chosen the Percent of Affiliate's Commission");
+                merchant.nc_display = merchant.network_commission + "% of Affiliate Commission"
+            };
+            merchant.nc = (Number(merchant.network_commission / 100));
+            fetch('https://classic.avantlink.com/api.php?module=AdminReport&auth_key=' + API_KEY + '&merchant_id=' + merchant.id + '&merchant_parent_id=0&affiliate_id=0&website_id=0&date_begin=' + startDate + '&date_end=' + endDate + '&affiliate_group_id=0&report_id=' + report_id + '&output=xml')
+                .then(response => response.text())
+                .then(str =>
+                    xmlDoc = new window.DOMParser().parseFromString(str, "text/xml"))
+                .then(data =>
+                    // console.log(data)
+                    reportStep2(data, report_id)
+                );
+        };
+        function reportStep2(xml, report_id) {
+            switch (report_id) {
+                case 15: //Performance Summary by Affiliate for selected dates
+                    affiliates = [];
+                    xmlDoc = xml.getElementsByTagName('Table1')
+                    for (let i = 0; i < xmlDoc.length; i++) {
+                        affiliates.push({
+                            Affiliate: xmlDoc[i].getElementsByTagName('Affiliate')[0].childNodes[0].nodeValue,
+                            Click_Throughs: xmlDoc[i].getElementsByTagName('Click_Throughs')[0].childNodes[0].nodeValue,
+                            Affiliate_Id: xmlDoc[i].getElementsByTagName('Affiliate_Id')[0].childNodes[0].nodeValue,
+                            Number_of_Sales: xmlDoc[i].getElementsByTagName('Number_of_Sales')[0].childNodes[0].nodeValue,
+                            Sales: xmlDoc[i].getElementsByTagName('Sales')[0].childNodes[0].nodeValue,
+                            Conversion_Rate: xmlDoc[i].getElementsByTagName('Conversion_Rate')[0].childNodes[0].nodeValue,
+                        });
+                    }
+                    for (let i = 0; i < affiliates.length; i++) {
+                        affiliates[i].clicks = Number(affiliates[i].Click_Throughs.replaceAll(',', ''));
+                        affiliates[i].sales_amount = Number(affiliates[i].Sales.replaceAll(',', '').replaceAll('\$', ''));
+                        affiliates[i].sales_count = Number(affiliates[i].Number_of_Sales.replaceAll(',', ''));
+                        outage.total_sales = outage.total_sales + affiliates[i].sales_amount;
+                        outage.total_sales_count = outage.total_sales_count + affiliates[i].sales_count;
+                        outage.total_clicks = outage.total_clicks + affiliates[i].clicks;
+                        // outage.average_sales_total = outage.total_sales / affiliates.length
+                    };
+                    affiliates.sort((a, b) => b.clicks - a.clicks);
+                    // outage.conversion_rate = Number((outage.total_sales_count / outage.total_clicks)); //.toFixed(6) !?
+                    outage.aov = Number((outage.total_sales / outage.total_sales_count).toFixed(2));
+                    outage.total_sales = Number(outage.total_sales.toFixed(2));
+                    outage.date_start_display = new Date(outage.date_start);
+                    outage.date_end_display = new Date(outage.date_end);
+                    baseline.date_start_display = new Date(outage.date_start);
+                    baseline.date_start_display.setDate(baseline.date_start_display.getDate() - 21);
+                    baseline.date_end_display = new Date(outage.date_start);
+                    baseline.date_end_display.setDate(baseline.date_end_display.getDate() - 1);
+                    baseline.date_start = baseline.date_start_display.toISOString().split('T')[0]
+                    baseline.date_end = baseline.date_end_display.toISOString().split('T')[0]
+                    document.getElementById("baselineStartDate").value = baseline.date_start
+                    document.getElementById("baselineEndDate").value = baseline.date_end
+                    //Displaying the suggested BaseLine.
+                    updateByID('baselineDates', ((DateToString(baseline.date_start_display)) + " to " + (DateToString(baseline.date_end_display))));
+                    successify("baselineDates");
+                    document.getElementById('secondSubmit').classList.remove("disabled")
+                    buildMerchantTable();
+                    buildOutageTable();
+                    console.log(merchant);
+                    console.log(outage);
+                    console.log(baseline);
+                    console.log(affiliates);
+                    break
+                case 1: //Performance Summary for outage period
+                    console.log(xml)
+                    xmlDoc = xml.getElementsByTagName('Table1')
+                    baseline.sales_count = Number((xmlDoc[0].getElementsByTagName('Number_of_Sales')[0].childNodes[0].nodeValue).replaceAll(',', ''))
+                    baseline.sales_amount = Number((xmlDoc[0].getElementsByTagName('Sales')[0].childNodes[0].nodeValue).replaceAll('\$', '').replaceAll(',', ''))
+                    baseline.clicks = Number((xmlDoc[0].getElementsByTagName('Click_Throughs')[0].childNodes[0].nodeValue).replaceAll(',', ''))
+                    baseline.conversion_rate = ((Number((xmlDoc[0].getElementsByTagName('Conversion_Rate')[0].childNodes[0].nodeValue).replaceAll('\%', ''))) / 100).toFixed(6)
+                    baseline.conversion_rate = Number(baseline.conversion_rate)
+                    baseline.aov = Number((xmlDoc[0].getElementsByTagName('Average_Sale_Amount')[0].childNodes[0].nodeValue).replaceAll('\$', '').replaceAll(',', ''))
+                    buildAllTables();
+                    break
+            };
+        };
+        function buildAllTables() {
+            outage.estimated_total = (baseline.aov * outage.total_clicks);
+            outage.estimated_sales = Number((outage.estimated_total * baseline.conversion_rate).toFixed(2));
+            outage.discrepency = Number((outage.estimated_sales - outage.total_sales).toFixed(2))
+            outage.adjusted_discrepency = Number((outage.average_sales_total - outage.discrepency).toFixed(2));
+            console.log(merchant);
+            console.log(outage);
+            console.log(baseline);
+            console.log(affiliates);
+            buildBaseLineTable();
+            buildMerchantTable();
+
+            buildAffiliateTable();
+        };
+        function successify(id) {
+            document.getElementById(id).classList.remove("alert-danger");
+            document.getElementById(id).classList.add("alert-success")
+        };
+        function toUSD(dollarInt) {
+            var formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+            });
+            dollarUSD = formatter.format(dollarInt);
+            return dollarUSD
+        };
+        function fileCheck(myFile) {
+            var file = myFile.files[0];
+            var filename = file.name;
+            filename.split('\-')
+            console.log("FILENAME, ", filename);
+            return filename;
+        };
+        function btn2() {
+            if (baseline.salesTotal && secondButtonBoolean) {
+                document.getElementById('secondSubmit').classList.remove("disabled")
+            };
+        };
+        function readFile(input) {
+            let fileName = fileCheck(input).replace(/ *\([^)]*\) */g, "");
+            let id = input.id
+            let file = input.files[0];
+            let fileReader = new FileReader();
+            let allLines = []
+            fileReader.readAsText(file);
+            fileReader.onload = function () {
+                var text = fileReader.result;
+                var allLines = text.split('\n')
+                var topRow = allLines[0].split(',')
+                let valuesRegExp = /(?:\"([^\"]*(?:\"\"[^\"]*)*)\")|([^\",]+)/g;
+                let elements = [];
+                console.log("TOPROW- " + topRow[1])
+                if (topRow[1] == 'First Name') {//THIS IS AN AFFILIATE REPORT FOR Commission RATE
+                    if (affiliates == []) {
+                        alert("YOU MUST UPLOAD THE PERFORMANCE SUMMARY BY AFFILIATE FIRST")
+                    }
+                    else {
+                        secondButtonBoolean = true;
+                        console.log("TRUE!? " + secondButtonBoolean)
+                        for (i = 1; i < (allLines.length); i++) {
+                            let thisRow = allLines[i].split(',');
+                            affiliates.forEach(affiliate => {
+                                if (affiliate.Affiliate_Id === thisRow[0]) {
+                                    let cr = (Number(Number(thisRow[8].replaceAll('\%', '')).toFixed(2)) / 100)
+                                    affiliate.commissionRate = cr
+                                }
+                                else {
+                                }
+                            })
+                        };
+                        btn2();
+                        console.log("Affiliates Updated?");
+                        console.log(affiliates);
+                        successify('affiliateFormFile');
+                        merchant.affDoc = fileName;
+                    } document.getElementById("affiliateReportFileName").innerHTML = fileName
+                }
+                else {
+                    console.log('unidentified report')
+                }
+            };
+        };
+        function updateByID(id, text) {
+            document.getElementById(id).innerHTML = text
+        };
+        function DateToString(date) {
+            let options = {
+                // weekday: "short", //to display the full name of the day, you can use short to indicate an abbreviation of the day
+                day: "numeric",
+                month: "long", //to display the full name of the month
+                year: "numeric"
+            };
+            var sDay = date.toLocaleDateString("en-US", options);
+            return sDay
+        };
+        function build2columns(table, row, col1, col2) {
+            var row = table.insertRow(row);
+            var cell1 = row.insertCell(0).innerHTML = col1;
+            var cell2 = row.insertCell(1).innerHTML = col2;
+            cell1.width = '30%'
+        };
+        function buildMerchantTable() {
+            var table = document.getElementById("merchantTable");
+            table.innerHTML = ''
+            build2columns(table, 0, "Merchant:", merchant.name);
+            build2columns(table, 1, "Merchant ID :", merchant.id);
+            build2columns(table, 2, "Network Commission:", (merchant.nc_display));
+        };
+        function buildOutageTable(o, t) {
+            var table = document.getElementById("outageTable");
+            table.innerHTML = '';
+            table.style.textAlign = 'right'
+            var row = table.insertRow(0);
+            var cell1 = row.insertCell(0).innerHTML = "Outage Dates :";
+            var cell2 = row.insertCell(1).innerHTML = (DateToString(outage.date_start_display) + " to " + DateToString(outage.date_end_display));
+            build2columns(table, 1, "Clicks :", outage.total_clicks);
+            build2columns(table, 2, "Estimated Sales:", (toUSD(outage.estimated_sales)));
+            build2columns(table, 3, "Tracked Sales :", (toUSD(outage.total_sales)));
+            build2columns(table, 4, "Discrepency :", (toUSD(outage.discrepency)));
+            build2columns(table, 5, "Adjusted Discrepency :", (toUSD(t)));
+        };
+        function buildBaseLineTable(data) {
+            var table = document.getElementById("baselineTable");
+            table.innerHTML = ''
+            table.style.textAlign = 'right'
+            var row = table.insertRow(0);
+            var cell1 = row.insertCell(0).innerHTML = "Baseline Dates :";
+            var cell2 = row.insertCell(1).innerHTML = (DateToString(baseline.date_start_display) + " to " + DateToString(baseline.date_end_display));
+            cell2.id = 'centeredDate'
+            var row = table.insertRow(1);
+            var cell3 = row.insertCell(0).innerHTML = "Sales :";
+            var cell4 = row.insertCell(1).innerHTML = (toUSD(baseline.sales_amount));
+            var row = table.insertRow(2);
+            var cell5 = row.insertCell(0).innerHTML = "Number of Sales :";
+            var cell6 = row.insertCell(1).innerHTML = (baseline.sales_count);
+            var row = table.insertRow(3);
+            var cell1 = row.insertCell(0).innerHTML = "Clickthroughs :";
+            var cell2 = row.insertCell(1).innerHTML = (baseline.clicks);
+            var row = table.insertRow(4);
+            var cell3 = row.insertCell(0).innerHTML = "Conversion Rate :";
+            var cell4 = row.insertCell(1).innerHTML = ((baseline.conversion_rate * 100).toFixed(2) + " %");
+            var row = table.insertRow(5);
+            var cell5 = row.insertCell(0).innerHTML = "AOV :";
+            var cell6 = row.insertCell(1).innerHTML = (toUSD(baseline.aov));
+        };
+        function buildAffiliateTable() {
+            var atable = document.getElementById("affTable");
+            if (atable.innerHTML) { atable.innerHTML = '' };
+            document.getElementById("secondSubmit").innerHTML = "Click to Update Table"
+            document.getElementById('makePDF').classList.remove('collapse')
+            document.getElementById('makeBatchSalesDoc').classList.remove('collapse')
+            var table = document.getElementById('affTable');
+            var tableHead = document.createElement('thead');
+            var tr = document.createElement('tr');
+            var arrheader = ['Affiliate ID', 'Affiliate Name', 'Click Throughs', 'Tracked Sales during the outage', 'Estimated Sales by AOV, and Conversion', 'Percentage based on Clicks', 'Estimated Sales by Click Percentage', 'Average of Two Sales Figures', 'Estimated Affiliate Commission', 'Estimated Network Commission'];
+            affarr = affiliates.slice(0, (merchant.affiliate_count));
+            var totals = {
+                clicks: 0,
+                estimatedSalesbyAOV: 0,
+                estimatedSalesByClick: 0,
+                avgOfTwo: 0,
+                estimatedComm: 0,
+                networkComm: 0
+            };
+            for (var k = 0; k < affarr.length; k++) {
+                totals.clicks = (totals.clicks + (affarr[k].clicks))
+            };
+            console.log("TOTAL CLICKS + " + totals.clicks)
+            for (var j = 0; j < arrheader.length; j++) {
+                var th = document.createElement('th'); //column
+                var text = document.createTextNode(arrheader[j]); //cell
+                th.appendChild(text);
+                tr.appendChild(th);
+            };
+            tableHead.classList.add('table-primary', 'vertical-align')
+            tableHead.style.textAlign = 'center';
+            table.appendChild(tableHead);
+            tableHead.appendChild(tr)
+            console.log(affarr)
+            for (var i = 0; i < affarr.length; i++) {
+                affarr[i].estimatedAOV = (baseline.conversion_rate * baseline.aov * affarr[i].clicks);
+                if (affarr[i].commissionRate) { }
+                else {
+                    console.log(i)
+                    affarr[i].commissionRate = .01
+                    console.log(affarr[i].Affiliate + " Does not have a commission rate")
+                }
+                let percentageBasedOnClicks = Number((affarr[i].clicks / totals.clicks).toFixed(4));
+                let estimatedSalesBasedOnPercent = Number((percentageBasedOnClicks * outage.discrepency).toFixed(2));
+                affarr[i].salesAverage = (affarr[i].estimatedAOV + estimatedSalesBasedOnPercent) / 2;
+                let estimatedCommission = Number((affarr[i].salesAverage * affarr[i].commissionRate).toFixed(2))
+                let estimatedNC = (affarr[i].salesAverage) * merchant.nc;
+                if (document.getElementById("percentOfAffCom").checked) {
+                    estimatedNC = (estimatedCommission * merchant.nc)
+                };
+                // outage.avgTotal = (outage.avgTotal + affarr[i].salesAverage) //!? is this redudant with totals.avgOfTwo?
+                totals.estimatedSalesbyAOV = totals.estimatedSalesbyAOV + affarr[i].estimatedAOV;
+                totals.estimatedSalesByClick = totals.estimatedSalesByClick + estimatedSalesBasedOnPercent;
+                totals.avgOfTwo = totals.avgOfTwo + affarr[i].salesAverage;
+                totals.estimatedComm = totals.estimatedComm + estimatedCommission;
+                totals.networkComm = totals.networkComm + estimatedNC;
+                let tr = document.createElement('tr');
+                let td1 = document.createElement('td');
+                let td2 = document.createElement('td');
+                let td3 = document.createElement('td');
+                let td4 = document.createElement('td');
+                let td5 = document.createElement('td');
+                let td6 = document.createElement('td');
+                let td7 = document.createElement('td');
+                let td8 = document.createElement('td');
+                let td9 = document.createElement('td');
+                let td10 = document.createElement('td');
+                td2.style.textAlign = 'center';
+                let text1 = document.createTextNode(affarr[i].Affiliate_Id);
+                let text2 = document.createTextNode(affarr[i].Affiliate);
+                let text3 = document.createTextNode(affarr[i].Click_Throughs);
+                let text4 = document.createTextNode(affarr[i].Sales);
+                let text5 = document.createTextNode(toUSD(affarr[i].estimatedAOV));
+                let text6 = document.createTextNode((percentageBasedOnClicks * 100).toFixed(2) + "%");
+                let text7 = document.createTextNode(toUSD(estimatedSalesBasedOnPercent));
+                let text8 = document.createTextNode(toUSD(affarr[i].salesAverage));
+                let text9 = document.createTextNode(toUSD(estimatedCommission));
+                let text10 = document.createTextNode(toUSD(estimatedNC));
+                td1.appendChild(text1);
+                td2.appendChild(text2);
+                td3.appendChild(text3);
+                td4.appendChild(text4);
+                td5.appendChild(text5);
+                td6.appendChild(text6);
+                td7.appendChild(text7);
+                td8.appendChild(text8);
+                td9.appendChild(text9);
+                td10.appendChild(text10);
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+                tr.appendChild(td5);
+                tr.appendChild(td6);
+                tr.appendChild(td7);
+                tr.appendChild(td8);
+                tr.appendChild(td9);
+                tr.appendChild(td10);
+                table.appendChild(tr);
+            };
+            let footer = document.createElement('tfoot');
+            let tf1 = document.createElement('tr');
+            let c1 = document.createElement('td');
+            let c2 = document.createElement('td');
+            let c3 = document.createElement('td');
+            let c4 = document.createElement('td');
+            let c5 = document.createElement('td');
+            let c6 = document.createElement('td');
+            let c7 = document.createElement('td');
+            let t1 = document.createTextNode('Totals from the top ' + merchant.affiliateCount + ' Affiliates');
+            c1.scope = 'row';
+            c1.colSpan = '2';
+            c3.colSpan = '2';
+            c4.colSpan = '2';
+            footer.classList.add('table-secondary')
+            let t2 = document.createTextNode(totals.clicks);
+            let t3 = document.createTextNode(toUSD(totals.estimatedSalesbyAOV));
+            let t4 = document.createTextNode(toUSD(totals.estimatedSalesByClick));
+            let t5 = document.createTextNode(toUSD(totals.avgOfTwo));
+            let t6 = document.createTextNode(toUSD(totals.estimatedComm));
+            let t7 = document.createTextNode(toUSD(totals.networkComm));
+            c1.appendChild(t1);
+            c2.appendChild(t2);
+            c3.appendChild(t3);
+            c4.appendChild(t4);
+            c5.appendChild(t5);
+            c6.appendChild(t6);
+            c7.appendChild(t7);
+            tf1.appendChild(c1);
+            tf1.appendChild(c2);
+            tf1.appendChild(c3);
+            tf1.appendChild(c4);
+            tf1.appendChild(c5);
+            tf1.appendChild(c6);
+            tf1.appendChild(c7);
+            footer.appendChild(tf1);
+            table.appendChild(footer);
+            console.log(outage);
+            buildOutageTable(outage, totals.avgOfTwo);
+            buildBaseLineTable(baseline);
+        };
+        function generatePDF() {
+            console.log("Make a PDF")
+            // Choose the element id which you want to export.
+            var element = document.getElementById('collapseThree');
+            // element.style.width = '1200px';
+            // element.style.height = '1600px';
+            var opt = {
+                margin: 0.15,
+                filename: ('Outage Estimate - ' + merchant.name + " - " + merchant.id + " - "),
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 1 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait', precision: '12' }
+            };
+            // choose the element and pass it to html2pdf() function and call the save() on it to save as pdf.
+            html2pdf().set(opt).from(element).save();
+        };
+        function buildBatchSales() {
+            const rows = [
+                ['Affiliate Data', 'Transaction ID', 'Product ID/SKU', 'Sale Item Amount', 'Sale Item Quantity'],
+            ];
+            let today = ((new Date().getMonth() + 1) + "." + (new Date().getDate()) + '.' + (new Date().getFullYear()))
+            affarr.forEach(affiliate => {
+                let newArr = [affiliate.Affiliate_Id, ('outage_estimate_' + today + "_" + affiliate.Affiliate_Id), '', Number(affiliate.salesAverage.toFixed(2)), '']
+                rows.push(newArr);
+            });
+            let csvContent = "data:text/csv;charset=utf-8,";
+            rows.forEach(function (rowArray) {
+                let row = rowArray.join(",");
+                csvContent += row + "\r\n";
+            });
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", ("Batch-Sales-Document for " + merchant.name + "_" + outage.dates));
+            document.body.appendChild(link); // Required for FF
+            link.click(); // This will download the data file named ("Batch_Sales_"+merchant.name+"_"+outage.dates).
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
+</body>
+
+</html>
