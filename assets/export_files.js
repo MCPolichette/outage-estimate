@@ -2,7 +2,7 @@
 function generatePDF() {
     console.log("Make a PDF")
     // Choose the element id which you want to export.
-    var element = document.getElementById('collapseThree');
+    var element = document.getElementById('report_pdf');
     // element.style.width = '1200px';
     // element.style.height = '1600px';
     var opt = {
