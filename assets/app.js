@@ -1,58 +1,3 @@
-
-var API_KEY = ''
-var affiliates = [];
-var affarr = [];
-var outage = {
-    value: 'outage',
-    total_sales: 0,
-    total_sales_count: 0,
-    total_clicks: 0,
-};
-var baseline = { value: "baseline", };
-var merchant = { affiliate_count: 20 };
-var secondButtonBoolean = false;
-function password_check() {
-    API_KEY = document.getElementById('password_input').value
-    unhide(['post_password_display']);
-    hide(['title']);
-    document.getElementById('first_display').remove();
-};
-function hide(arr) {
-    //Reveals a hidden HTML element.
-    console.log(arr)
-    arr.forEach(id => {
-        let element = document.getElementById(id);
-        element.hidden = true
-    })
-};
-function unhide(arr) {
-    //Reveals a hidden HTML element.
-    arr.forEach(id => {
-        let element = document.getElementById(id);
-        if (element.hidden) {
-            element.removeAttribute('hidden');
-        };
-    });
-};
-function testValues() {
-    document.getElementById('merchantName').value = 'Sole Fitness';
-    document.getElementById('merchantId').value = '11149';
-    document.getElementById('networkCommission').value = '2';
-    document.getElementById("outageStartDate").value = '2022-03-09'
-    document.getElementById("outageEndDate").value = '2022-04-18'
-    outage.estimatedSales = 10000
-    outage.discrepency = 5050
-    outage.adjusted_discrepency = 11111.11;
-    function unhide(arr) {
-        //Reveals a hidden HTML element.
-        arr.forEach(id => {
-            let element = document.getElementById(id);
-            if (element.hidden) {
-                element.removeAttribute('hidden');
-            };
-        });
-    };
-};
 function updateByID(id, text) {
     document.getElementById(id).innerHTML = text
 };
@@ -132,120 +77,7 @@ function show_new_baseline() {
     document.getElementById('chooseNewBaseLine').checked = true
 
 };
-function runReport(report_id) {
-    outage.date_start = document.getElementById("outageStartDate").value;
-    outage.date_end = document.getElementById("outageEndDate").value;
-    startDate = outage.date_start;
-    endDate = outage.date_end;
-    switch (report_id) {
-        case 1:
-            if (baseline.date_start) {
-                startDate = baseline.date_start
-                endDate = baseline.date_end
-            }
-            else { alert("No Baseline Dates exist \n This error should never apear.") }
-            let x = document.getElementById('chooseSuggestedBaseline').checked
-            switch (document.getElementById('chooseSuggestedBaseline').checked) {
-                case true:
-                    startDate = baseline.date_start
-                    endDate = baseline.date_end
-                    break
-                case false:
-                    startDate = document.getElementById('baselineStartDate').value
-                    endDate = document.getElementById('baselineEndDate').value
-                    break
-            }
-            break
-        case 15:
-            startDate = outage.date_start
-            endDate = outage.date_end
-            break
-    };
-    console.log(startDate, endDate)
-    merchant.name = document.getElementById('merchantName').value;
-    merchant.id = document.getElementById('merchantId').value;
-    merchant.affiliate_count = Number(document.getElementById('affiliateCount').value);
-    merchant.network_commission = (document.getElementById("networkCommission").value)
-    if (document.getElementById("percentOfSale").checked) {
-        console.log("Chosen the Default Percent of Sale");
-        merchant.nc_display = merchant.network_commission + "% of Sale"
-    };
-    if (document.getElementById("percentOfAffCom").checked) {
-        console.log("Chosen the Percent of Affiliate's Commission");
-        merchant.nc_display = merchant.network_commission + "% of Affiliate Commission"
-    };
-    merchant.nc = (Number(merchant.network_commission / 100));
-    fetch('https://classic.avantlink.com/api.php?module=AdminReport&auth_key=' + API_KEY + '&merchant_id=' + merchant.id + '&merchant_parent_id=0&affiliate_id=0&website_id=0&date_begin=' + startDate + '&date_end=' + endDate + '&affiliate_group_id=0&report_id=' + report_id + '&output=xml')
-        .then(response => response.text())
-        .then(str =>
-            xmlDoc = new window.DOMParser().parseFromString(str, "text/xml"))
-        .then(data =>
-            // console.log(data)
-            reportStep2(data, report_id)
-        );
-};
-function reportStep2(xml, report_id) {
-    switch (report_id) {
-        case 15: //Performance Summary by Affiliate for selected dates
-            affiliates = [];
-            xmlDoc = xml.getElementsByTagName('Table1')
-            for (let i = 0; i < xmlDoc.length; i++) {
-                affiliates.push({
-                    Affiliate: xmlDoc[i].getElementsByTagName('Affiliate')[0].childNodes[0].nodeValue,
-                    Click_Throughs: xmlDoc[i].getElementsByTagName('Click_Throughs')[0].childNodes[0].nodeValue,
-                    Affiliate_Id: xmlDoc[i].getElementsByTagName('Affiliate_Id')[0].childNodes[0].nodeValue,
-                    Number_of_Sales: xmlDoc[i].getElementsByTagName('Number_of_Sales')[0].childNodes[0].nodeValue,
-                    Sales: xmlDoc[i].getElementsByTagName('Sales')[0].childNodes[0].nodeValue,
-                    Conversion_Rate: xmlDoc[i].getElementsByTagName('Conversion_Rate')[0].childNodes[0].nodeValue,
-                });
-            }
-            for (let i = 0; i < affiliates.length; i++) {
-                affiliates[i].clicks = Number(affiliates[i].Click_Throughs.replaceAll(',', ''));
-                affiliates[i].sales_amount = Number(affiliates[i].Sales.replaceAll(',', '').replaceAll('\$', ''));
-                affiliates[i].sales_count = Number(affiliates[i].Number_of_Sales.replaceAll(',', ''));
-                outage.total_sales = outage.total_sales + affiliates[i].sales_amount;
-                outage.total_sales_count = outage.total_sales_count + affiliates[i].sales_count;
-                outage.total_clicks = outage.total_clicks + affiliates[i].clicks;
-                // outage.average_sales_total = outage.total_sales / affiliates.length
-            };
-            affiliates.sort((a, b) => b.clicks - a.clicks);
-            // outage.conversion_rate = Number((outage.total_sales_count / outage.total_clicks)); //.toFixed(6) !?
-            outage.aov = Number((outage.total_sales / outage.total_sales_count).toFixed(2));
-            outage.total_sales = Number(outage.total_sales.toFixed(2));
-            outage.date_start_display = new Date(outage.date_start);
-            outage.date_end_display = new Date(outage.date_end);
-            baseline.date_start_display = new Date(outage.date_start);
-            baseline.date_start_display.setDate(baseline.date_start_display.getDate() - 21);
-            baseline.date_end_display = new Date(outage.date_start);
-            baseline.date_end_display.setDate(baseline.date_end_display.getDate() - 1);
-            baseline.date_start = baseline.date_start_display.toISOString().split('T')[0]
-            baseline.date_end = baseline.date_end_display.toISOString().split('T')[0]
-            document.getElementById("baselineStartDate").value = baseline.date_start
-            document.getElementById("baselineEndDate").value = baseline.date_end
-            //Displaying the suggested BaseLine.
-            updateByID('baselineDates', ((DateToString(baseline.date_start_display)) + " to " + (DateToString(baseline.date_end_display))));
-            successify("baselineDates");
-            document.getElementById('secondSubmit').classList.remove("disabled")
-            buildMerchantTable();
-            buildOutageTable();
-            console.log(merchant);
-            console.log(outage);
-            console.log(baseline);
-            console.log(affiliates);
-            break
-        case 1: //Performance Summary for outage period
-            console.log(xml)
-            xmlDoc = xml.getElementsByTagName('Table1')
-            baseline.sales_count = Number((xmlDoc[0].getElementsByTagName('Number_of_Sales')[0].childNodes[0].nodeValue).replaceAll(',', ''))
-            baseline.sales_amount = Number((xmlDoc[0].getElementsByTagName('Sales')[0].childNodes[0].nodeValue).replaceAll('\$', '').replaceAll(',', ''))
-            baseline.clicks = Number((xmlDoc[0].getElementsByTagName('Click_Throughs')[0].childNodes[0].nodeValue).replaceAll(',', ''))
-            baseline.conversion_rate = ((Number((xmlDoc[0].getElementsByTagName('Conversion_Rate')[0].childNodes[0].nodeValue).replaceAll('\%', ''))) / 100).toFixed(6)
-            baseline.conversion_rate = Number(baseline.conversion_rate)
-            baseline.aov = Number((xmlDoc[0].getElementsByTagName('Average_Sale_Amount')[0].childNodes[0].nodeValue).replaceAll('\$', '').replaceAll(',', ''))
-            buildAllTables();
-            break
-    };
-};
+
 function buildAllTables() {
     outage.estimated_total = (baseline.aov * outage.total_clicks);
     outage.estimated_sales = Number((outage.estimated_total * baseline.conversion_rate).toFixed(2));
@@ -257,7 +89,6 @@ function buildAllTables() {
     console.log(affiliates);
     buildBaseLineTable();
     buildMerchantTable();
-
     buildAffiliateTable();
 };
 function successify(id) {
@@ -379,7 +210,6 @@ function buildBaseLineTable(data) {
     var cell5 = row.insertCell(0).innerHTML = "AOV :";
     var cell6 = row.insertCell(1).innerHTML = (toUSD(baseline.aov));
 };
-
 function buildAffiliateTable() {
     var atable = document.getElementById("affTable");
     if (atable.innerHTML) { atable.innerHTML = '' };
