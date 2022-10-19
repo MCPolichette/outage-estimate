@@ -1,4 +1,4 @@
-export function testValues() {
+function testValues() {
     document.getElementById('merchantName').value = 'Sole Fitness';
     document.getElementById('merchantId').value = '11149';
     document.getElementById('networkCommission').value = '2';

@@ -1,4 +1,4 @@
-export function buildAffiliateTable() {
+function buildAffiliateTable() {
     var atable = document.getElementById("affTable");
     if (atable.innerHTML) { atable.innerHTML = '' };
     document.getElementById("secondSubmit").innerHTML = "Click to Update Table"

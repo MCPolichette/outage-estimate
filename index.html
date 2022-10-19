@@ -17,7 +17,8 @@
     <div class="container-sm fixed-top">
         <div id="title" class="row">
             <div class="col-4">
-                <h4 class="justify-content-center"><strong>AvantLink Outage Estimate</strong></h4>
+                <h4 onclick='use_local_storage()' class="justify-content-center"><strong>AvantLink Outage
+                        Estimate</strong></h4>
             </div>
         </div>
     </div>
@@ -347,7 +348,62 @@
 
 
     <!-- SCRIPTS! -->
+    <script>
+        // Global Variables
+        var API_KEY = ''
+        var affiliates = [];
+        var affarr = [];
+        var outage = {
+            value: 'outage',
+            total_sales: 0,
+            total_sales_count: 0,
+            total_clicks: 0,
+        };
+        var baseline = { value: "baseline", };
+        var merchant = { affiliate_count: 20 };
+        var secondButtonBoolean = false;
+
+        function hide(arr) {
+            //Reveals a hidden HTML element.
+            console.log(arr)
+            arr.forEach(id => {
+                let element = document.getElementById(id);
+                element.hidden = true
+            })
+        };
+        function unhide(arr) {
+            //Reveals a hidden HTML element.
+            arr.forEach(id => {
+                let element = document.getElementById(id);
+                if (element.hidden) {
+                    element.removeAttribute('hidden');
+                };
+            });
+        };
+        function password_check() {
+            API_KEY = document.getElementById('password_input').value
+            switch (API_KEY.length) {
+                case 32:
+                    window.localStorage.setItem('test', API_KEY);
+                    unhide(['post_password_display']);
+                    hide(['title']);
+                    document.getElementById('first_display').remove();
+                    break
+                default:
+                    alert("NOPE")
+                    break
+            };
+        };
+        function use_local_storage() {
+            let x = window.localStorage.test;
+            document.getElementById('password_input').value = x;
+            console.log(x);
+        };
+    </script>
     <script src="assets/app.js"></script>
+    <script src="assets/test_functions.js"></script>
+    <script src="assets/API_reports.js"></script>
+    <script src="assets/report_step_2.js"></script>
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
