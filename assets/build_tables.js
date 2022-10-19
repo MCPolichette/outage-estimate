@@ -5,9 +5,18 @@ function build2columns(table, row, col1, col2) {
 };
 function buildMerchantTable() {
     var table = document.getElementById("merchantTable");
-    table.innerHTML = ''
-    build2columns(table, 0, "Merchant:", merchant.name);
-    build2columns(table, 1, "Merchant ID :", merchant.id);
+    table.innerHTML = '';
+    var thead = document.createElement('thead');
+    var tr = document.createElement('tr');
+    var th0 = document.createElement('th')
+    var th1 = document.createElement('th')
+    th0.innerHTML = merchant.name;
+    th1.innerHTML = merchant.id;
+    tr.appendChild(th0);
+    tr.appendChild(th1);
+    thead.appendChild(tr);
+    table.appendChild(thead);
+    build2columns(table, 1, "Outage Estimate", (today))
     build2columns(table, 2, "Network Commission:", (merchant.nc_display));
 };
 function buildOutageTable(o, t) {
@@ -27,11 +36,14 @@ function buildOutageTable(o, t) {
     build2columns(table, 10, "Tracked Sales :", (toUSD(outage.total_sales)));
     build2columns(table, 11, "Discrepency :", (toUSD(outage.discrepency)));
     build2columns(table, 12, "Adjusted Discrepency :", (toUSD(outage.adjusted_discrepency)));
+    //specific styling in the build
     table.rows[6].cells[0].classList.add("border-0");
     table.rows[6].cells[1].classList.add("border-0");
-
+    table.rows[0].cells[0].classList.add("table-primary");
+    table.rows[0].cells[1].classList.add("table-primary");
+    table.rows[7].cells[0].classList.add("table-primary");
+    table.rows[7].cells[1].classList.add("table-primary");
 };
-
 function buildAffiliateTable() {
     var table = document.getElementById('affTable');
     if (table.innerHTML) { table.innerHTML = '' };
