@@ -1,3 +1,39 @@
+// BASE FUNCTIONS (!? Move to their own JS file?)
+function hide(arr) {
+    //Reveals a hidden HTML element.
+    arr.forEach(id => {
+        let element = document.getElementById(id);
+        element.hidden = true
+    })
+};
+function unhide(arr) {
+    //Reveals a hidden HTML element.
+    arr.forEach(id => {
+        let element = document.getElementById(id);
+        if (element.hidden) {
+            element.removeAttribute('hidden');
+        };
+    });
+};
+function password_check() {
+    API_KEY = document.getElementById('password_input').value
+    switch (API_KEY.length) {
+        case 32:
+            window.localStorage.setItem('test', API_KEY);
+            unhide(['post_password_display']);
+            hide(['title']);
+            document.getElementById('first_display').remove();
+            break
+        default:
+            alert("NOPE")
+            break
+    };
+};
+function use_local_storage() {
+    let x = window.localStorage.test;
+    document.getElementById('password_input').value = x;
+    console.log(x);
+};
 function updateByID(id, text) {
     document.getElementById(id).innerHTML = text
 };
@@ -11,71 +47,60 @@ function DateToString(date) {
     var sDay = date.toLocaleDateString("en-US", options);
     return sDay
 };
-function validateFirstStep() {
-    validationCheck(['outageStartDate', 'outageEndDate', 'merchantName', 'merchantId', 'networkCommission', 'affiliateCount',], 'firstSubmit', 'firstStepComplete')
+
+//==================================================================================================================
+// STEPS:
+function first_step_report() {
+    update_base_data();
+    run_report({
+        startDate: outage.date_start,
+        endDate: outage.date_end,
+        report_id: 15
+    }) //Performance Summary for Outage report.
 };
-function validateSecondStep() {
-    let date_check = document.getElementById("chooseNewBaseLine").checked
-    if (date_check) {
-        baseline.date_start = document.getElementById("baselineStartDate").value
-        baseline.date_end = document.getElementById("baselineEndDate").value
-        baseline.date_start_display = new Date(baseline.date_start);
-        baseline.date_start_display.setDate(baseline.date_start_display.getDate());
-        baseline.date_end_display = new Date(baseline.date_end);
-        baseline.date_end_display.setDate(baseline.date_end_display.getDate());
-        console.log(baseline)
+function second_report() {
+    update_base_data();
+    let start = baseline.date_start
+    let end = baseline.date_end
+    switch (document.getElementById('chooseSuggestedBaseline').checked) {
+        case true:
+            start = baseline.date_start
+            end = baseline.date_end
+            break
+        case false:
+            start = document.getElementById('baselineStartDate').value
+            end = document.getElementById('baselineEndDate').value
+            break
     }
-    console.log(date_check)
-    let commission_check = document.querySelector('input[name="AffCommission"]:checked');
-    if (commission_check)
-        switch (commission_check.value) {
-            case 'universal_rate':
-                validationCheck(['universal_affiliate_commission',], 'secondSubmit', 'SecondStepComplete')
-                merchant.universal_commission = (Number(document.getElementById('universal_affiliate_commission').value) / 100)
-                if (merchant.universal_commission) {
-                    affiliates.forEach(affiliate => {
-                        affiliate.commissionRate = merchant.universal_commission
-                    })
-                    console.log(affiliates);
-                    console.log(merchant)
-                };
-                break
-            case 'individual_rate':
-                validationCheck(['affiliateFormFile'], 'secondSubmit', 'SecondStepComplete')
-                break
-        }
-    else {
-        console.log("NULL")
-        alert('please set Affiliate Commission, or upload Affiliate Commission Rates')
+    run_report({
+        startDate: start,
+        endDate: end,
+        report_id: 1
+    }) //Performance Summary for Outage report.
+
+}
+function update_base_data() {
+    //Updates these values every time.. just in case someone is tweaking the parameters.
+    outage.date_start = document.getElementById("outageStartDate").value;
+    outage.date_end = document.getElementById("outageEndDate").value;
+    merchant.name = document.getElementById('merchantName').value;
+    merchant.id = document.getElementById('merchantId').value;
+    merchant.affiliate_count = Number(document.getElementById('affiliateCount').value);
+    merchant.network_commission = (document.getElementById("networkCommission").value)
+    if (document.getElementById("percentOfSale").checked) {
+        console.log("Chosen the Default Percent of Sale");
+        merchant.nc_display = merchant.network_commission + "% of Sale"
     };
-};
-function validationCheck(arr, btn_id, new_button) {
-    let arrCheck = 0
-    arr.forEach(id => {
-        if (document.getElementById(id).value) {
-            successify(id)
-        }
-        else {
-            document.getElementById(id).classList.add("alert-danger")
-            arrCheck = 1;
-            let btn = document.getElementById(new_button)
-            btn.classList.add("disabled")
-        };
-    });
-    console.log("Zero is good ==> " + arrCheck)
-    if (arrCheck) { }
-    else {
-        let btn = document.getElementById(new_button)
-        btn.classList.remove("disabled")
-        btn.classList.remove("collapse")
-        document.getElementById(btn_id).innerHTML = "Click to Update"
-        //btn.classList.remove("disabled")
+    if (document.getElementById("percentOfAffCom").checked) {
+        console.log("Chosen the Percent of Affiliate's Commission");
+        merchant.nc_display = merchant.network_commission + "% of Affiliate Commission"
     };
-};
+    merchant.nc = (Number(merchant.network_commission / 100));
+}
+
 function show_new_baseline() {
     document.getElementById('newBaseLineSelection').classList.remove("collapse")
     document.getElementById('chooseNewBaseLine').checked = true
-
 };
 
 function buildAllTables() {
@@ -115,51 +140,6 @@ function btn2() {
         document.getElementById('secondSubmit').classList.remove("disabled")
     };
 };
-function readFile(input) {
-    let fileName = fileCheck(input).replace(/ *\([^)]*\) */g, "");
-    let id = input.id
-    let file = input.files[0];
-    let fileReader = new FileReader();
-    let allLines = []
-    fileReader.readAsText(file);
-    fileReader.onload = function () {
-        var text = fileReader.result;
-        var allLines = text.split('\n')
-        var topRow = allLines[0].split(',')
-        let valuesRegExp = /(?:\"([^\"]*(?:\"\"[^\"]*)*)\")|([^\",]+)/g;
-        let elements = [];
-        console.log("TOPROW- " + topRow[1])
-        if (topRow[1] == 'First Name') {//THIS IS AN AFFILIATE REPORT FOR Commission RATE
-            if (affiliates == []) {
-                alert("YOU MUST UPLOAD THE PERFORMANCE SUMMARY BY AFFILIATE FIRST")
-            }
-            else {
-                secondButtonBoolean = true;
-                console.log("TRUE!? " + secondButtonBoolean)
-                for (i = 1; i < (allLines.length); i++) {
-                    let thisRow = allLines[i].split(',');
-                    affiliates.forEach(affiliate => {
-                        if (affiliate.Affiliate_Id === thisRow[0]) {
-                            let cr = (Number(Number(thisRow[8].replaceAll('\%', '')).toFixed(2)) / 100)
-                            affiliate.commissionRate = cr
-                        }
-                        else {
-                        }
-                    })
-                };
-                btn2();
-                console.log("Affiliates Updated?");
-                console.log(affiliates);
-                successify('affiliateFormFile');
-                merchant.affDoc = fileName;
-            } document.getElementById("affiliateReportFileName").innerHTML = fileName
-        }
-        else {
-            console.log('unidentified report')
-        }
-    };
-};
-
 function build2columns(table, row, col1, col2) {
     var row = table.insertRow(row);
     var cell1 = row.insertCell(0).innerHTML = col1;

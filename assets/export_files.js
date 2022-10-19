@@ -1,4 +1,5 @@
-export function generatePDF() {
+
+function generatePDF() {
     console.log("Make a PDF")
     // Choose the element id which you want to export.
     var element = document.getElementById('collapseThree');
@@ -14,7 +15,7 @@ export function generatePDF() {
     // choose the element and pass it to html2pdf() function and call the save() on it to save as pdf.
     html2pdf().set(opt).from(element).save();
 };
-export function buildBatchSales() {
+function buildBatchSales() {
     const rows = [
         ['Affiliate Data', 'Transaction ID', 'Product ID/SKU', 'Sale Item Amount', 'Sale Item Quantity'],
     ];
