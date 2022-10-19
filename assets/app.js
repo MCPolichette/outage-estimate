@@ -15,6 +15,11 @@ function unhide(arr) {
         };
     });
 };
+function btn2() {
+    if (baseline.salesTotal && secondButtonBoolean) {
+        document.getElementById('secondSubmit').classList.remove("disabled")
+    };
+};
 function password_check() {
     API_KEY = document.getElementById('password_input').value
     switch (API_KEY.length) {
@@ -87,8 +92,8 @@ function second_report() {
         startDate: start,
         endDate: end,
         report_id: 1
-    }) //Performance Summary for Outage report.
-    buildAllTables();
+    }) //Performance Summary for Outage report. ==> Builds all Tables
+
 };
 function update_base_data() {
     //Updates these values every time.. just in case someone is tweaking the parameters.
@@ -117,17 +122,8 @@ function show_new_baseline() {
 };
 
 function buildAllTables() {
-    outage.estimated_total = (baseline.aov * outage.total_clicks);
-    outage.estimated_sales = Number((outage.estimated_total * baseline.conversion_rate).toFixed(2));
-    outage.discrepency = Number((outage.estimated_sales - outage.total_sales).toFixed(2))
-    outage.adjusted_discrepency = Number((outage.average_sales_total - outage.discrepency).toFixed(2));
-    console.log(merchant);
-    console.log(outage);
-    console.log(baseline);
-    console.log(affiliates);
-    buildBaseLineTable();
-    buildMerchantTable();
     buildAffiliateTable();
+    buildMerchantTable();
     buildOutageTable();
 };
 function successify(id) {

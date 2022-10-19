@@ -1,9 +1,3 @@
-
-function btn2() {
-    if (baseline.salesTotal && secondButtonBoolean) {
-        document.getElementById('secondSubmit').classList.remove("disabled")
-    };
-};
 function build2columns(table, row, col1, col2) {
     var row = table.insertRow(row);
     var cell1 = row.insertCell(0).innerHTML = col1;
@@ -20,46 +14,30 @@ function buildOutageTable(o, t) {
     var table = document.getElementById("outageTable");
     table.innerHTML = '';
     table.style.textAlign = 'right'
-    var row = table.insertRow(0);
-    var cell1 = row.insertCell(0).innerHTML = "Outage Dates :";
-    var cell2 = row.insertCell(1).innerHTML = (DateToString(outage.date_start_display) + " to " + DateToString(outage.date_end_display));
-    build2columns(table, 1, "Clicks :", outage.total_clicks);
-    build2columns(table, 2, "Estimated Sales:", (toUSD(outage.estimated_sales)));
-    build2columns(table, 3, "Tracked Sales :", (toUSD(outage.total_sales)));
-    build2columns(table, 4, "Discrepency :", (toUSD(outage.discrepency)));
-    build2columns(table, 5, "Adjusted Discrepency :", (toUSD(t)));
+    build2columns(table, 0, "Baseline Dates :", (DateToString(baseline.date_start_display) + " to " + DateToString(baseline.date_end_display)));
+    build2columns(table, 1, "Sales :", (toUSD(baseline.sales_amount)));
+    build2columns(table, 2, "Number of Sales :", baseline.sales_count);
+    build2columns(table, 3, "Clickthroughs :", (baseline.clicks))
+    build2columns(table, 4, "Conversion Rate :", ((baseline.conversion_rate * 100).toFixed(2) + " %"))
+    build2columns(table, 5, "AOV :", (toUSD(baseline.aov)))
+    build2columns(table, 6, "", "")
+    build2columns(table, 7, "Outage Dates :", (DateToString(outage.date_start_display) + " to " + DateToString(outage.date_end_display)));
+    build2columns(table, 8, "Clicks :", outage.total_clicks);
+    build2columns(table, 9, "Estimated Sales:", (toUSD(outage.estimated_sales)));
+    build2columns(table, 10, "Tracked Sales :", (toUSD(outage.total_sales)));
+    build2columns(table, 11, "Discrepency :", (toUSD(outage.discrepency)));
+    build2columns(table, 12, "Adjusted Discrepency :", (toUSD(outage.adjusted_discrepency)));
+    table.rows[6].cells[0].classList.add("border-0");
+    table.rows[6].cells[1].classList.add("border-0");
+
 };
-function buildBaseLineTable(data) {
-    var table = document.getElementById("baselineTable");
-    table.innerHTML = ''
-    table.style.textAlign = 'right'
-    var row = table.insertRow(0);
-    var cell1 = row.insertCell(0).innerHTML = "Baseline Dates :";
-    var cell2 = row.insertCell(1).innerHTML = (DateToString(baseline.date_start_display) + " to " + DateToString(baseline.date_end_display));
-    cell2.id = 'centeredDate'
-    var row = table.insertRow(1);
-    var cell3 = row.insertCell(0).innerHTML = "Sales :";
-    var cell4 = row.insertCell(1).innerHTML = (toUSD(baseline.sales_amount));
-    var row = table.insertRow(2);
-    var cell5 = row.insertCell(0).innerHTML = "Number of Sales :";
-    var cell6 = row.insertCell(1).innerHTML = (baseline.sales_count);
-    var row = table.insertRow(3);
-    var cell1 = row.insertCell(0).innerHTML = "Clickthroughs :";
-    var cell2 = row.insertCell(1).innerHTML = (baseline.clicks);
-    var row = table.insertRow(4);
-    var cell3 = row.insertCell(0).innerHTML = "Conversion Rate :";
-    var cell4 = row.insertCell(1).innerHTML = ((baseline.conversion_rate * 100).toFixed(2) + " %");
-    var row = table.insertRow(5);
-    var cell5 = row.insertCell(0).innerHTML = "AOV :";
-    var cell6 = row.insertCell(1).innerHTML = (toUSD(baseline.aov));
-};
+
 function buildAffiliateTable() {
-    var atable = document.getElementById("affTable");
-    if (atable.innerHTML) { atable.innerHTML = '' };
+    var table = document.getElementById('affTable');
+    if (table.innerHTML) { table.innerHTML = '' };
     document.getElementById("secondSubmit").innerHTML = "Click to Update Table"
     document.getElementById('makePDF').classList.remove('collapse')
     document.getElementById('makeBatchSalesDoc').classList.remove('collapse')
-    var table = document.getElementById('affTable');
     var tableHead = document.createElement('thead');
     var tr = document.createElement('tr');
     var arrheader = ['Affiliate ID', 'Affiliate Name', 'Click Throughs', 'Tracked Sales during the outage', 'Estimated Sales by AOV, and Conversion', 'Percentage based on Clicks', 'Estimated Sales by Click Percentage', 'Average of Two Sales Figures', 'Estimated Affiliate Commission', 'Estimated Network Commission'];
@@ -88,13 +66,14 @@ function buildAffiliateTable() {
     tableHead.appendChild(tr)
     console.log(affarr)
     for (var i = 0; i < affarr.length; i++) {
+        let this_affiliate = [];
         affarr[i].estimatedAOV = (baseline.conversion_rate * baseline.aov * affarr[i].clicks);
         if (affarr[i].commissionRate) { }
         else {
             console.log(i)
             affarr[i].commissionRate = .01
             console.log(affarr[i].Affiliate + " Does not have a commission rate")
-        }
+        };
         let percentageBasedOnClicks = Number((affarr[i].clicks / totals.clicks).toFixed(4));
         let estimatedSalesBasedOnPercent = Number((percentageBasedOnClicks * outage.discrepency).toFixed(2));
         affarr[i].salesAverage = (affarr[i].estimatedAOV + estimatedSalesBasedOnPercent) / 2;
@@ -103,54 +82,30 @@ function buildAffiliateTable() {
         if (document.getElementById("percentOfAffCom").checked) {
             estimatedNC = (estimatedCommission * merchant.nc)
         };
-        // outage.avgTotal = (outage.avgTotal + affarr[i].salesAverage) //!? is this redudant with totals.avgOfTwo?
         totals.estimatedSalesbyAOV = totals.estimatedSalesbyAOV + affarr[i].estimatedAOV;
         totals.estimatedSalesByClick = totals.estimatedSalesByClick + estimatedSalesBasedOnPercent;
         totals.avgOfTwo = totals.avgOfTwo + affarr[i].salesAverage;
+        outage.adjusted_discrepency = totals.avgOfTwo;
         totals.estimatedComm = totals.estimatedComm + estimatedCommission;
         totals.networkComm = totals.networkComm + estimatedNC;
+        this_affiliate.push(affarr[i].Affiliate_Id);
+        this_affiliate.push(affarr[i].Affiliate);
+        this_affiliate.push(affarr[i].Click_Throughs);
+        this_affiliate.push(affarr[i].Sales);
+        this_affiliate.push(toUSD(affarr[i].estimatedAOV));
+        this_affiliate.push((percentageBasedOnClicks * 100).toFixed(2) + "%");
+        this_affiliate.push(toUSD(estimatedSalesBasedOnPercent));
+        this_affiliate.push(toUSD(affarr[i].salesAverage));
+        this_affiliate.push(toUSD(estimatedCommission));
+        this_affiliate.push(toUSD(estimatedNC));
+
         let tr = document.createElement('tr');
-        let td1 = document.createElement('td');
-        let td2 = document.createElement('td');
-        let td3 = document.createElement('td');
-        let td4 = document.createElement('td');
-        let td5 = document.createElement('td');
-        let td6 = document.createElement('td');
-        let td7 = document.createElement('td');
-        let td8 = document.createElement('td');
-        let td9 = document.createElement('td');
-        let td10 = document.createElement('td');
-        td2.style.textAlign = 'center';
-        let text1 = document.createTextNode(affarr[i].Affiliate_Id);
-        let text2 = document.createTextNode(affarr[i].Affiliate);
-        let text3 = document.createTextNode(affarr[i].Click_Throughs);
-        let text4 = document.createTextNode(affarr[i].Sales);
-        let text5 = document.createTextNode(toUSD(affarr[i].estimatedAOV));
-        let text6 = document.createTextNode((percentageBasedOnClicks * 100).toFixed(2) + "%");
-        let text7 = document.createTextNode(toUSD(estimatedSalesBasedOnPercent));
-        let text8 = document.createTextNode(toUSD(affarr[i].salesAverage));
-        let text9 = document.createTextNode(toUSD(estimatedCommission));
-        let text10 = document.createTextNode(toUSD(estimatedNC));
-        td1.appendChild(text1);
-        td2.appendChild(text2);
-        td3.appendChild(text3);
-        td4.appendChild(text4);
-        td5.appendChild(text5);
-        td6.appendChild(text6);
-        td7.appendChild(text7);
-        td8.appendChild(text8);
-        td9.appendChild(text9);
-        td10.appendChild(text10);
-        tr.appendChild(td1);
-        tr.appendChild(td2);
-        tr.appendChild(td3);
-        tr.appendChild(td4);
-        tr.appendChild(td5);
-        tr.appendChild(td6);
-        tr.appendChild(td7);
-        tr.appendChild(td8);
-        tr.appendChild(td9);
-        tr.appendChild(td10);
+        for (l = 0; l < this_affiliate.length; l++) {
+            let td = document.createElement('td');
+            let text = document.createTextNode(this_affiliate[l]);
+            td.appendChild(text);
+            tr.appendChild(td)
+        }
         table.appendChild(tr);
     };
     let footer = document.createElement('tfoot');
@@ -162,7 +117,7 @@ function buildAffiliateTable() {
     let c5 = document.createElement('td');
     let c6 = document.createElement('td');
     let c7 = document.createElement('td');
-    let t1 = document.createTextNode('Totals from the top ' + merchant.affiliateCount + ' Affiliates');
+    let t1 = document.createTextNode('Totals from the top ' + merchant.affiliate_count + ' Affiliates');
     c1.scope = 'row';
     c1.colSpan = '2';
     c3.colSpan = '2';
@@ -192,5 +147,5 @@ function buildAffiliateTable() {
     table.appendChild(footer);
     console.log(outage);
     buildOutageTable(outage, totals.avgOfTwo);
-    buildBaseLineTable(baseline);
+
 }

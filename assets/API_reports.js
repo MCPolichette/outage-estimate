@@ -47,7 +47,7 @@ function reportStep2(xml, report_id) {
             console.log(baseline);
             console.log(affiliates);
             break
-        case 1: //Performance Summary for outage period
+        case 1: //Performance Summary for BASELINE
             console.log(xml)
             xmlDoc = xml.getElementsByTagName('Table1')
             baseline.sales_count = Number((xmlDoc[0].getElementsByTagName('Number_of_Sales')[0].childNodes[0].nodeValue).replaceAll(',', ''))
@@ -55,7 +55,15 @@ function reportStep2(xml, report_id) {
             baseline.clicks = Number((xmlDoc[0].getElementsByTagName('Click_Throughs')[0].childNodes[0].nodeValue).replaceAll(',', ''))
             baseline.conversion_rate = ((Number((xmlDoc[0].getElementsByTagName('Conversion_Rate')[0].childNodes[0].nodeValue).replaceAll('\%', ''))) / 100).toFixed(6)
             baseline.conversion_rate = Number(baseline.conversion_rate)
-            baseline.aov = Number((xmlDoc[0].getElementsByTagName('Average_Sale_Amount')[0].childNodes[0].nodeValue).replaceAll('\$', '').replaceAll(',', ''))
+            baseline.aov = Number((xmlDoc[0].getElementsByTagName('Average_Sale_Amount')[0].childNodes[0].nodeValue).replaceAll('\$', '').replaceAll(',', ''));
+            outage.estimated_total = (baseline.aov * outage.total_clicks);
+            outage.estimated_sales = Number((outage.estimated_total * baseline.conversion_rate).toFixed(2));
+            outage.discrepency = Number((outage.estimated_sales - outage.total_sales).toFixed(2))
+            console.log(merchant);
+            console.log(outage);
+            console.log(baseline);
+            console.log(affiliates);
+            buildAllTables();
             break
     };
 };
