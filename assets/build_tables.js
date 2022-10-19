@@ -8,7 +8,6 @@ function build2columns(table, row, col1, col2) {
     var row = table.insertRow(row);
     var cell1 = row.insertCell(0).innerHTML = col1;
     var cell2 = row.insertCell(1).innerHTML = col2;
-    cell1.width = '30%'
 };
 function buildMerchantTable() {
     var table = document.getElementById("merchantTable");
