@@ -4,7 +4,7 @@ function generatePDF() {
     // Choose the element id which you want to export.
     var element = document.getElementById('report_pdf');
     // element.style.width = '1200px';
-    // element.style.height = '1600px';
+    // element.style.height = '1100px';
     var opt = {
         margin: 0.15,
         filename: ('Outage Estimate - ' + merchant.name + " - " + merchant.id + " - "),

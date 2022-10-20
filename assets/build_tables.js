@@ -73,8 +73,8 @@ function buildAffiliateTable() {
     tableHead.classList.add('table-primary', 'vertical-align')
     tableHead.style.textAlign = 'center';
     table.appendChild(tableHead);
-    tableHead.appendChild(tr)
-    console.log(affarr)
+    tableHead.appendChild(tr);
+    console.log(affarr);
     for (var i = 0; i < affarr.length; i++) {
         let this_affiliate = [];
         affarr[i].estimatedAOV = (baseline.conversion_rate * baseline.aov * affarr[i].clicks);
@@ -110,7 +110,6 @@ function buildAffiliateTable() {
         this_affiliate.push(toUSD(affarr[i].salesAverage));
         this_affiliate.push(toUSD(estimatedCommission));
         this_affiliate.push(toUSD(estimatedNC));
-
         let tr = document.createElement('tr');
         for (l = 0; l < this_affiliate.length; l++) {
             let td = document.createElement('td');
@@ -123,10 +122,10 @@ function buildAffiliateTable() {
     let smallest_commission_rate = (findMin(totals.commission_rates, totals.commission_rates.length))
     let largest_commission_rate = (findMax(totals.commission_rates, totals.commission_rates.length))
     if (smallest_commission_rate === largest_commission_rate) {
-        outage.commission_rates = (smallest_commission_rate + "%")
+        outage.commission_rates = ((smallest_commission_rate * 100) + "%")
     }
     else {
-        outage.commission_rates = (smallest_commission_rate + "% - " + largest_commission_rate + "%")
+        outage.commission_rates = ((smallest_commission_rate * 100) + "% - " + largest_commission_rate + "%")
     }
     let footer = document.createElement('tfoot');
     let tf1 = document.createElement('tr');
