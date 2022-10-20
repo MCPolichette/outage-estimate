@@ -70,9 +70,9 @@
                                         <br><br>
                                         <div class="input-group">
                                             <label for="networkCommission" class="form-label">Network
-                                                Commission:</label>
-                                            <input type="text" class="align-right" id="networkCommission" value=""
-                                                requiredclass="form-control"
+                                                Commission: </label>
+                                            <input type="text" style='width: 2em; margin-left: 1em' class="align-right"
+                                                id="networkCommission" value="" requiredclass="form-control"
                                                 aria-label="Text input with dropdown button">
                                             <span class="input-group-text">%</span>
                                         </div>
@@ -229,6 +229,8 @@
                                         </div>
                                     </div><br>
                                     <hr>
+                                    <div class='col'></div>
+
                                     <p>To find the Active Affiliates report, Log in as the Merchant on the Dashboard and
                                         navigate:
                                     </p>
@@ -237,6 +239,34 @@
                                             Status: ACTIVE > Download Affiliates (button) </strong>
                                     </p>
                                     <p>Please download as a .CSV file.</p>
+                                </div>
+                                <hr>
+                                <div class="row ">
+                                    <p>
+                                        <button class="btn btn-sm btn-secondary" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#advanced_settings" aria-expanded="false"
+                                            aria-controls="advanced_settings">
+                                            Advanced Report Settings
+                                        </button>
+                                    </p>
+                                </div>
+                                <div class="collapse" id="advanced_settings">
+                                    <div class="card card-body">
+                                        <p>Work in Progress (this feature is incomplete)</p>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input disabled" type="checkbox"
+                                                id="flexSwitchCheckDefault" checked>
+                                            <label class="form-check-label" for="flexSwitchCheckDefault">Display
+                                                Affiliate commission earned during the outage.</label>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input disabled" type="checkbox"
+                                                id="flexSwitchCheckChecked" checked>
+                                            <label class="form-check-label" for="flexSwitchCheckChecked">Account for
+                                                EACH Affiliate's earned commission during the outage.</label>
+                                        </div>
+
+                                    </div>
                                 </div>
                                 <hr>
                                 <div class='row'>
@@ -355,7 +385,8 @@
         var baseline = { value: "baseline", };
         var merchant = { affiliate_count: 20 };
         var secondButtonBoolean = false;
-        var today = ((new Date().getMonth() + 1) + "." + (new Date().getDate()) + '.' + (new Date().getFullYear()))
+        var todays_date;
+
 
     </script>
     <script src="assets/app.js"></script>
