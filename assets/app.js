@@ -53,16 +53,18 @@ function DateToString(date) {
     return sDay
 };
 
-//==================================================================================================================
+//============================================================================
 // STEPS:
 function first_step_report() {
     update_base_data();
+    todays_date = DateToString(new Date())
     baseline.date_start_display = new Date(outage.date_start);
     baseline.date_start_display.setDate(baseline.date_start_display.getDate() - 21);
     baseline.date_end_display = new Date(outage.date_start);
     baseline.date_end_display.setDate(baseline.date_end_display.getDate() - 1);
     baseline.date_start = baseline.date_start_display.toISOString().split('T')[0]
     baseline.date_end = baseline.date_end_display.toISOString().split('T')[0]
+
     document.getElementById("baselineStartDate").value = baseline.date_start
     document.getElementById("baselineEndDate").value = baseline.date_end
     //Displaying the suggested BaseLine.

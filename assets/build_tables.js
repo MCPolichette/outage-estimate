@@ -5,21 +5,13 @@ function build2columns(table, row, col1, col2) {
 };
 function buildMerchantTable() {
     var table = document.getElementById("merchantTable");
-    table.innerHTML = '';
-    var thead = document.createElement('thead');
-    var tr = document.createElement('tr');
-    var th0 = document.createElement('th')
-    var th1 = document.createElement('th')
-    th0.innerHTML = merchant.name;
-    th1.innerHTML = merchant.id;
-    tr.appendChild(th0);
-    tr.appendChild(th1);
-    thead.appendChild(tr);
-    table.appendChild(thead);
-    build2columns(table, 1, "Outage Estimate", (today))
-    build2columns(table, 2, "Network Commission:", (merchant.nc_display));
+    document.getElementById('r_merchant_name').innerHTML = merchant.name;
+    document.getElementById('r_merchant_id').innerHTML = merchant.id;
+    document.getElementById('r_date').innerHTML = todays_date;
+    document.getElementById('r_nc_commission').innerHTML = merchant.nc_display;
+
 };
-function buildOutageTable(o, t) {
+function buildOutageTable() {
     var table = document.getElementById("outageTable");
     table.innerHTML = '';
     table.style.textAlign = 'right'
@@ -47,9 +39,9 @@ function buildOutageTable(o, t) {
 function buildAffiliateTable() {
     var table = document.getElementById('affTable');
     if (table.innerHTML) { table.innerHTML = '' };
-    document.getElementById("secondSubmit").innerHTML = "Click to Update Table"
-    document.getElementById('makePDF').classList.remove('collapse')
-    document.getElementById('makeBatchSalesDoc').classList.remove('collapse')
+    document.getElementById("secondSubmit").innerHTML = "Click to Update Table";
+    document.getElementById('makePDF').classList.remove('collapse');
+    document.getElementById('makeBatchSalesDoc').classList.remove('collapse');
     var tableHead = document.createElement('thead');
     var tr = document.createElement('tr');
     var arrheader = ['Affiliate ID', 'Affiliate Name', 'Click Throughs', 'Tracked Sales during the outage', 'Estimated Sales by AOV, and Conversion', 'Percentage based on Clicks', 'Estimated Sales by Click Percentage', 'Average of Two Sales Figures', 'Estimated Affiliate Commission', 'Estimated Network Commission'];
@@ -72,6 +64,7 @@ function buildAffiliateTable() {
         th.appendChild(text);
         tr.appendChild(th);
     };
+    totals.percent_of_total_clicks = (((totals.clicks / outage.total_clicks) * 100).toFixed(2) + "%");
     tableHead.classList.add('table-primary', 'vertical-align')
     tableHead.style.textAlign = 'center';
     table.appendChild(tableHead);
@@ -119,6 +112,7 @@ function buildAffiliateTable() {
             tr.appendChild(td)
         }
         table.appendChild(tr);
+        console.log(totals)
     };
     let footer = document.createElement('tfoot');
     let tf1 = document.createElement('tr');
