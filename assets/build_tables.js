@@ -5,19 +5,11 @@ function build2columns(table, row, col1, col2) {
 };
 function buildMerchantTable() {
     var table = document.getElementById("merchantTable");
-    table.innerHTML = '';
-    var thead = document.createElement('thead');
-    var tr = document.createElement('tr');
-    var th0 = document.createElement('th')
-    var th1 = document.createElement('th')
-    th0.innerHTML = merchant.name;
-    th1.innerHTML = merchant.id;
-    tr.appendChild(th0);
-    tr.appendChild(th1);
-    thead.appendChild(tr);
-    table.appendChild(thead);
-    build2columns(table, 1, "Outage Estimate", todays_date)
-    build2columns(table, 2, "Network Commission:", (merchant.nc_display));
+    document.getElementById('r_merchant_name').innerHTML = merchant.name;
+    document.getElementById('r_merchant_id').innerHTML = merchant.id;
+    document.getElementById('r_date').innerHTML = todays_date;
+    document.getElementById('r_nc_commission').innerHTML = merchant.nc_display;
+
 };
 function buildOutageTable() {
     var table = document.getElementById("outageTable");

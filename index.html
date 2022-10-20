@@ -301,7 +301,22 @@
                                     <div class="row align-top">
                                         <div class="col">
                                             <table id='merchantTable' class="table  centered table-sm">
-                                                <tbody></tbody>
+                                                <tbody>
+                                                    <thead>
+                                                        <tr>
+                                                            <th id="r_merchant_name">Merchant Name</th>
+                                                            <th id="r_merchant_id">Merchant ID</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tr>
+                                                        <td>Outage Estimate </td>
+                                                        <td id="r_date"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Network Commission:</td>
+                                                        <td id="r_nc_commission"></td>
+                                                    </tr>
+                                                </tbody>
                                             </table>
                                             <p class='reportFont'>Compares the outage period with a statistically
                                                 similar "baseline" period
@@ -387,7 +402,6 @@
         var secondButtonBoolean = false;
         var todays_date;
 
-
     </script>
     <script src="assets/app.js"></script>
     <script src="assets/test_functions.js"></script>
@@ -395,8 +409,6 @@
     <script src="assets/read_file.js"></script>
     <script src="assets/validation_scripts.js"></script>
     <script src="assets/build_tables.js"></script>
-
-
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
