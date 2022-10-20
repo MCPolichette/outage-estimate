@@ -9,6 +9,10 @@ function buildMerchantTable() {
     document.getElementById('r_merchant_id').innerHTML = merchant.id;
     document.getElementById('r_date').innerHTML = todays_date;
     document.getElementById('r_nc_commission').innerHTML = merchant.nc_display;
+    document.getElementById('r_ac_commission').innerHTML = outage.commission_rates;
+    document.getElementById('r_estimated_ac').innerHTML = toUSD(totals.estimatedComm);
+    document.getElementById('r_estimated_nc').innerHTML = toUSD(totals.networkComm);
+    document.getElementById('r_estimated_total').innerHTML = toUSD(totals.networkComm + totals.estimatedComm);
 
 };
 function buildOutageTable() {
@@ -46,13 +50,14 @@ function buildAffiliateTable() {
     var tr = document.createElement('tr');
     var arrheader = ['Affiliate ID', 'Affiliate Name', 'Click Throughs', 'Tracked Sales during the outage', 'Estimated Sales by AOV, and Conversion', 'Percentage based on Clicks', 'Estimated Sales by Click Percentage', 'Average of Two Sales Figures', 'Estimated Affiliate Commission', 'Estimated Network Commission'];
     affarr = affiliates.slice(0, (merchant.affiliate_count));
-    var totals = {
+    totals = {
         clicks: 0,
         estimatedSalesbyAOV: 0,
         estimatedSalesByClick: 0,
         avgOfTwo: 0,
         estimatedComm: 0,
-        networkComm: 0
+        networkComm: 0,
+        commission_rates: []
     };
     for (var k = 0; k < affarr.length; k++) {
         totals.clicks = (totals.clicks + (affarr[k].clicks))
@@ -73,7 +78,9 @@ function buildAffiliateTable() {
     for (var i = 0; i < affarr.length; i++) {
         let this_affiliate = [];
         affarr[i].estimatedAOV = (baseline.conversion_rate * baseline.aov * affarr[i].clicks);
-        if (affarr[i].commissionRate) { }
+        if (affarr[i].commissionRate) {
+            totals.commission_rates.push(affarr[i].commissionRate)
+        }
         else {
             console.log(i)
             affarr[i].commissionRate = .01
@@ -112,8 +119,15 @@ function buildAffiliateTable() {
             tr.appendChild(td)
         }
         table.appendChild(tr);
-        console.log(totals)
     };
+    let smallest_commission_rate = (findMin(totals.commission_rates, totals.commission_rates.length))
+    let largest_commission_rate = (findMax(totals.commission_rates, totals.commission_rates.length))
+    if (smallest_commission_rate === largest_commission_rate) {
+        outage.commission_rates = (smallest_commission_rate + "%")
+    }
+    else {
+        outage.commission_rates = (smallest_commission_rate + "% - " + largest_commission_rate + "%")
+    }
     let footer = document.createElement('tfoot');
     let tf1 = document.createElement('tr');
     let c1 = document.createElement('td');
@@ -153,5 +167,4 @@ function buildAffiliateTable() {
     table.appendChild(footer);
     console.log(outage);
     buildOutageTable(outage, totals.avgOfTwo);
-
 }

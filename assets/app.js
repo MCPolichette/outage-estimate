@@ -15,6 +15,26 @@ function unhide(arr) {
         };
     });
 };
+// Function to find the minimum value
+function findMin(arr, n) {
+    let min = arr[0];
+    for (let i = 1; i < n; i++) {
+        min = Math.min(
+            min,
+            arr[i]); // Function to get minimum element
+    }
+    return min;
+};
+// Function to find the maximum value
+function findMax(arr, n) {
+    let max = arr[0];
+    for (let i = 1; i < n; i++) {
+        max = Math.max(
+            max,
+            arr[i]); // Function to get maximum element
+    }
+    return max;
+};
 function btn2() {
     if (baseline.salesTotal && secondButtonBoolean) {
         document.getElementById('secondSubmit').classList.remove("disabled")

@@ -24,20 +24,24 @@
     <div class='container-fluid d-flex flex-column min-vh-100 justify-content-center align-items-center'
         id='first_display'>
         <div class="row">
-            <div class="card shadow p-3 mb-5 bg-white rounded">
+            <div class="card shadow p-3 mb-5 bg-white rounded text-center">
                 <div class="card-body">
-                    <label for="password_input" class="form-label">Your API key</label>
+                    <div id="passwordHelpBlock" class="form-text">
+
+                        Please enter your required API key to continue and use this project.
+                    </div>
+                    <!-- <label for="password_input" class="form-label">Your API key</label> -->
                     <input type="password" id="password_input" class="form-control"
                         aria-describedby="passwordHelpBlock">
-                    <div id="passwordHelpBlock" class="form-text">
-                        You will need a an API key to continue and use this project.
-                    </div>
-                    <button type="submit" onclick='password_check()' class="btn btn-primary">Submit</button>
+
+                    <br>
+                    <button type="submit" onclick='password_check()' class="btn btn-block btn-primary">Submit</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class='container' hidden id="post_password_display">
+    <div class='container-fluid d-flex flex-column min-vh-100 justify-content-center align-items-center' hidden
+        id="post_password_display">
         <div class="row">
             <div class="col ">
                 <br>
@@ -313,7 +317,11 @@
                                                         <td id="r_date"></td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Network Commission:</td>
+                                                        <td>Affiliate Commission Rates:</td>
+                                                        <td id="r_ac_commission"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Network Commission Rate:</td>
                                                         <td id="r_nc_commission"></td>
                                                     </tr>
                                                 </tbody>
@@ -327,7 +335,7 @@
                                                 rate;
                                                 and the average of the two methods. Any actual sales during the outage
                                                 period are removed from the calculations.</p>
-                                            <ul class="list-group list-group-flush">
+                                            <!-- <ul class="list-group list-group-flush">
                                                 <li class="list-group-item"><strong>Reports Used for this
                                                         Estimate</strong>
                                                 </li>
@@ -337,7 +345,29 @@
                                                 </li>
                                                 <li id='affiliateReportFileName' class="list-group-item">
                                                 </li>
-                                            </ul>
+                                            </ul> -->
+                                            <table id='totals_table' class="table  centered table-sm">
+                                                <tbody>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Estimated Totals</th>
+                                                            <!-- <th id="aaa">Merchant ID</th> -->
+                                                        </tr>
+                                                    </thead>
+                                                    <tr>
+                                                        <td>Affiliate Commission</td>
+                                                        <td id="r_estimated_ac">xx</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Network Commission Rate:</td>
+                                                        <td id="r_estimated_nc">xx</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Total:</td>
+                                                        <td id="r_estimated_total">xx</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                             <br>
                                         </div>
                                         <div class="col" style="font-size: small;">
@@ -397,6 +427,7 @@
             total_sales_count: 0,
             total_clicks: 0,
         };
+        var totals = {};
         var baseline = { value: "baseline", };
         var merchant = { affiliate_count: 20 };
         var secondButtonBoolean = false;
