@@ -42,12 +42,12 @@
             </div>
         </div>
     </div>
-    <div class='container-fluid d-flex flex-column min-vh-100 justify-content-center align-items-center' hidden
+    <div class='container-fluid d-flex flex-column min-vh-100 justify-content-center align-items-center collapse'
         id="post_password_display">
         <div class="row">
             <div class="col ">
                 <br>
-                <div class="accordion shadow p-3 mb-5 bg-white rounded" id="accordionExample">
+                <div class="accordion shadow p-3 mb-5 bg-white rounded" id="outage-accordian" hidden>
                     <div class="accordion-item ">
                         <h2 class="accordion-header " id="headingOne">
                             <button class="accordion-button " type="button" data-bs-toggle="collapse"
@@ -56,7 +56,7 @@
                             </button>
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                            data-bs-parent="#accordionExample">
+                            data-bs-parent="#outage-accordian">
                             <div class="accordion-body">
                                 <div class="row g-3">
                                     <h4>Outage Estimate Testing</h4>
@@ -74,7 +74,7 @@
                                         <label for="merchantName" class="form-label">Merchant Name</label>
                                         <input type="text" class="form-control" id="merchantName" value="" required>
                                         <br><br>
-                                        <div class="input-group">
+                                        <div class="input-group input-group-sm">
                                             <label for="networkCommission" class="form-label">Network
                                                 Commission: </label>
                                             <input type="text" style='width: 2em; margin-left: 1em' class="align-right"
@@ -141,7 +141,7 @@
                             </button>
                         </h2>
                         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                            data-bs-parent="#accordionExample">
+                            data-bs-parent="#outage-accordian">
                             <div class="accordion-body">
                                 <p><strong>Determine the Baseline period for the outage.</strong>
                                 </p>In our standard contract,
@@ -258,20 +258,36 @@
                                 </div>
                                 <div class="collapse" id="advanced_settings">
                                     <div class="card card-body">
-                                        <p>Work in Progress (this feature is incomplete)</p>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input disabled" type="checkbox"
-                                                id="flexSwitchCheckDefault" checked>
-                                            <label class="form-check-label" for="flexSwitchCheckDefault">Display
-                                                Affiliate commission earned during the outage.</label>
-                                        </div>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input disabled" type="checkbox"
-                                                id="flexSwitchCheckChecked" checked>
-                                            <label class="form-check-label" for="flexSwitchCheckChecked">Account for
-                                                EACH Affiliate's earned commission during the outage.</label>
-                                        </div>
+                                        <div class="row small">
+                                            <div class="col-sm-6">
+                                                <p>Advanced Settings</p>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input " type="checkbox"
+                                                        id="display_aff_outage_commission">
+                                                    <label class="form-check-label"
+                                                        for="display_aff_outage_commission">Display
+                                                        Affiliate commission earned during the outage.</label>
+                                                </div>
+                                                <div class="form-check form-switch">
 
+                                                    <input class="form-check-input " disabled type="checkbox"
+                                                        id="flexSwitchCheckChecked">
+                                                    <label class="form-check-label" for="flexSwitchCheckChecked">Account
+                                                        for
+                                                        EACH Affiliate's earned commission during the
+                                                        outage.</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="mb-3">
+                                                    <label for="report_notes" class="form-label">Report
+                                                        Notes:</label>
+                                                    <textarea class="form-control" id="report_notes"
+                                                        rows="3"></textarea>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <hr>
@@ -301,7 +317,7 @@
                             </button>
                         </h2>
                         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                            data-bs-parent="#accordionExample">
+                            data-bs-parent="#outage-accordian">
                             <div class="accordion-body">
                                 <div class="container" id="report_pdf">
                                     <div class="row align-top">
@@ -337,18 +353,17 @@
                                                 rate;
                                                 and the average of the two methods. Any actual sales during the outage
                                                 period are removed from the calculations.</p>
-                                            <!-- <ul class="list-group list-group-flush">
-                                                <li class="list-group-item"><strong>Reports Used for this
-                                                        Estimate</strong>
-                                                </li>
-                                                <li id='outageFileName' class="list-group-item">performance summary by
-                                                    Affiliate</li>
-                                                <li id='baselineFileName' class="list-group-item">performance summary
-                                                </li>
-                                                <li id='affiliateReportFileName' class="list-group-item">
-                                                </li>
-                                            </ul> -->
                                             <br>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item"><strong>In the Table Below:</strong>
+                                                </li>
+                                                <li id='r_a_count' class="list-group-item">Notes about the Affiliates
+                                                </li>
+                                                <li id='r_note1' class="list-group-item">
+                                                </li>
+                                                <li id='r_note2' class="list-group-item">
+                                                </li>
+                                            </ul>
                                         </div>
                                         <div class="col" style="font-size: small;">
                                             <table id='outageTable'
@@ -356,13 +371,13 @@
                                                 <tbody> </tbody>
                                             </table>
                                             <table id='totals_table' class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Estimated Totals</th>
+                                                        <!-- <th id="aaa">Merchant ID</th> -->
+                                                    </tr>
+                                                </thead>
                                                 <tbody>
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Estimated Totals</th>
-                                                            <!-- <th id="aaa">Merchant ID</th> -->
-                                                        </tr>
-                                                    </thead>
                                                     <tr>
                                                         <td>Affiliate Commission</td>
                                                         <td id="r_estimated_ac">xx</td>
