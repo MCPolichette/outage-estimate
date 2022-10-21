@@ -45,7 +45,7 @@ function password_check() {
     switch (API_KEY.length) {
         case 32:
             window.localStorage.setItem('test', API_KEY);
-            unhide(['post_password_display']);
+            unhide(['outage-accordian']);
             hide(['title']);
             document.getElementById('first_display').remove();
             break
@@ -110,6 +110,7 @@ function second_report() {
             end = document.getElementById('baselineEndDate').value
             break
     }
+    document.getElementById('SecondStepComplete').classList.add('disabled')
     run_report({
         startDate: start,
         endDate: end,
