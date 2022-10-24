@@ -17,4 +17,9 @@ For this project to work, you will need to provide your own API key on the index
 ### Considerations:
 - Running an Performance Summary by Affiliate Website report, to determine how each website performed during the outage.  (this will also assist in building the Outage Batch Sale Document)
 - Creating logic around the Baseline Conversion rates.  As many Affiliates perform differently, and granting commission just based on click performance may not be the best metric.
-- Remove the sales from the Affiliate that earned it, as opposed to the current 'remove off the top' model.
+
+### Learning Experiences
+- Utilizing GitHub issues for notes, and goals instead of the Readme file, which Is what I had used in the past.
+- Building Dynamic Tables with Bootstrap.
+- Using more complicated API formats.
+- Better script management.

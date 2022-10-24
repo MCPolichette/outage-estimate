@@ -30,7 +30,6 @@
             <div class="card shadow p-3 mb-5 bg-white rounded text-center">
                 <div class="card-body">
                     <div id="passwordHelpBlock" class="form-text">
-
                         Please enter your required API key to continue and use this project.
                     </div><br>
                     <!-- <label for="password_input" class="form-label">Your API key</label> -->
@@ -42,92 +41,97 @@
             </div>
         </div>
     </div>
-    <div class='container-fluid d-flex flex-column min-vh-100 justify-content-center align-items-center collapse'
-        id="post_password_display">
+    <div class='container-fluid d-flex flex-column align-items-center collapse' id="post_password_display">
         <div class="row">
             <div class="col ">
                 <br>
                 <div class="accordion shadow p-3 mb-5 bg-white rounded" id="outage-accordian" hidden>
                     <div class="accordion-item ">
                         <h2 class="accordion-header " id="headingOne">
-                            <button class="accordion-button " type="button" data-bs-toggle="collapse"
+                            <button class="accordion-button btn-secondary " type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Outage Information <strong> (STEP 1)</strong>
+                                Outage Information -  <strong> (STEP 1)</strong>
                             </button>
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
                             data-bs-parent="#outage-accordian">
                             <div class="accordion-body">
-                                <div class="row g-3">
-                                    <h4>Outage Estimate Testing</h4>
-                                    <!-- <button type="button" onclick=" window.open('https://spoti.fi/3wq9qIU','_blank')"
+                                <div class="container-lg">
+                                    <div class="row g-3">
+                                        <h4>Outage Estimate Testing</h4>
+                                        <!-- <button type="button" onclick=" window.open('https://spoti.fi/3wq9qIU','_blank')"
                                                 class="btn btn-outline-secondary btn-sm">Testing Button - Populate random
                                                 Merchant Data
                                                 (experimental)</button> -->
-                                    <button class='btn-outline-success' onclick='testValues()'>Testing Button - POPULATE
-                                        WITH SOLE
-                                        FITNESS
-                                        VALUES</button>
-                                    <div class="col-md-5">
-                                        <label for="merchantId" class="form-label">Merchant ID </label>
-                                        <input type="text" class="form-control " id="merchantId" value="" required>
-                                        <label for="merchantName" class="form-label">Merchant Name</label>
-                                        <input type="text" class="form-control" id="merchantName" value="" required>
-                                        <br><br>
-                                        <div class="input-group input-group-sm">
-                                            <label for="networkCommission" class="form-label">Network
-                                                Commission: </label>
-                                            <input type="text" style='width: 2em; margin-left: 1em' class="align-right"
-                                                id="networkCommission" value="" requiredclass="form-control"
-                                                aria-label="Text input with dropdown button">
-                                            <span class="input-group-text">%</span>
-                                        </div>
-                                        <div style='font-size: small;'>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="networkPercentage"
-                                                    id="percentOfSale" value="option1" checked>
-                                                <label class="form-check-label" for="percentOfSale">
-                                                    Percent of Sale (Default)
-                                                </label>
+                                        <button class='btn-outline-success' onclick='testValues()'>Testing Button -
+                                            POPULATE
+                                            WITH SOLE
+                                            FITNESS
+                                            VALUES</button>
+                                        <div class="col-md-5">
+                                            <label for="merchantId" class="form-label">Merchant ID </label>
+                                            <input type="text" class="form-control " id="merchantId" value="" required>
+                                            <label for="merchantName" class="form-label">Merchant Name</label>
+                                            <input type="text" class="form-control" id="merchantName" value="" required>
+                                            <br><br>
+                                            <div class="input-group input-group-sm">
+                                                <label for="networkCommission" class="form-label">Network
+                                                    Commission: </label>
+                                                <input type="text" style='width: 2em; margin-left: 1em'
+                                                    class="align-right" id="networkCommission" value=""
+                                                    requiredclass="form-control"
+                                                    aria-label="Text input with dropdown button">
+                                                <span class="input-group-text">%</span>
                                             </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="networkPercentage"
-                                                    id="percentOfAffCom" value="option2">
-                                                <label class="form-check-label" for="percentOfAffCom">
-                                                    Percent of Affiliate Commission (uncommon)
-                                                </label>
+                                            <div style='font-size: small;'>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio"
+                                                        name="networkPercentage" id="percentOfSale" value="option1"
+                                                        checked>
+                                                    <label class="form-check-label" for="percentOfSale">
+                                                        Percent of Sale (Default)
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio"
+                                                        name="networkPercentage" id="percentOfAffCom" value="option2">
+                                                    <label class="form-check-label" for="percentOfAffCom">
+                                                        Percent of Affiliate Commission (uncommon)
+                                                    </label>
+                                                </div>
                                             </div>
+                                            <br>
                                         </div>
-                                        <br>
-                                    </div>
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-5">
-                                        <label for="outageStartDate" class="form-label">Outage Start Date</label>
-                                        <input type="date" class="form-control" id="outageStartDate" required>
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-5">
+                                            <label for="outageStartDate" class="form-label">Outage Start Date</label>
+                                            <input type="date" class="form-control" id="outageStartDate" required>
 
-                                        <label for="outageEndDate" class="form-label">Outage End Date</label>
-                                        <input type="date" class="form-control" id="outageEndDate" required><br>
-                                        <br>
-                                        <label for="affiliateCount" class="form-label">Number of Affiliates</label>
-                                        <input type="text" class="form-control" id="affiliateCount" value="20" required>
-                                        <span id="passwordHelpInline" class="form-text">
-                                            default 20
-                                        </span>
-                                        <br>
-                                    </div>
-                                    <div class="d-grid gap-2 col-6 mx-auto">
-                                        <button class="btn btn-primary  " id='firstSubmit'
-                                            onclick='validateFirstStep()'>
-                                            To
-                                            Submit
-                                            Vaules</button>
-                                    </div>
-                                    <div id='hidebutton1' class="d-grid gap-2  col-6 mx-auto">
-                                        <button class="btn disabled btn-success" id='firstStepComplete' type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                            onclick='first_step_report()' aria-expanded="false"
-                                            aria-controls="collapseTwo">NEXT
-                                            STEP</button>
+                                            <label for="outageEndDate" class="form-label">Outage End Date</label>
+                                            <input type="date" class="form-control" id="outageEndDate" required><br>
+                                            <br>
+                                            <label for="affiliateCount" class="form-label">Number of Affiliates</label>
+                                            <input type="text" class="form-control" id="affiliateCount" value="20"
+                                                required>
+                                            <span id="passwordHelpInline" class="form-text">
+                                                default 20
+                                            </span>
+                                            <br>
+                                        </div>
+                                        <div class="d-grid gap-2 col-6 mx-auto">
+                                            <button class="btn btn-primary  " id='firstSubmit'
+                                                onclick='validateFirstStep()'>
+                                                To
+                                                Submit
+                                                Vaules</button>
+                                        </div>
+                                        <div id='hidebutton1' class="d-grid gap-2  col-6 mx-auto">
+                                            <button class="btn disabled btn-success" id='firstStepComplete'
+                                                type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                                onclick='first_step_report()' aria-expanded="false"
+                                                aria-controls="collapseTwo">NEXT
+                                                STEP</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -135,175 +139,195 @@
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseTwo" aria-expanded="flase" aria-controls="collapseTwo">
-                                Baseline Information <strong>(STEP 2)</strong>
+                            <button class="accordion-button btn-secondary collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="flase"
+                                aria-controls="collapseTwo">
+                                Baseline Information -  <strong>(STEP 2)</strong>
                             </button>
                         </h2>
                         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                             data-bs-parent="#outage-accordian">
                             <div class="accordion-body">
-                                <p><strong>Determine the Baseline period for the outage.</strong>
-                                </p>In our standard contract,
-                                we define this as a 3-week period immediately before the outage.
-                                </p>
-                                <p>
-                                    However, in different cases this may not work well; for longer outages, or shorter
-                                    outages. Generally, we want to compare the outage period to 3+ times the same length
-                                    of
-                                    period where they were tracking. (This ensures a smoother / averaged estimate.)
-                                </p>
-                                <p>
-                                    Below we've selected the default baseline period. If you wish to use different
-                                    Dates, please specify in the date inserts below:</p>
-                                <div class="alert text-center alert-danger" id="baselineDates" role="alert">
-                                    <div class="spinner-border" role="status">
-                                        <span class="sr-only"></span>
-                                    </div>
-                                </div>
-                                <p>If the above dates are insufficient, please click below, and want to choose new
-                                    dates. click below</p>
-                                <div class='d-grid gap-2 col-6 mx-auto'>
-                                    <button class='btn btn-secondary' onclick='show_new_baseline()'>Select Different
-                                        Dates</button>
-                                </div>
-                                <hr>
-                                <div class="row collapse" id="newBaseLineSelection">
-                                    <div class='d-grid gap-2 col-8 mx-auto'>
-                                        <label for="baselineStartDate" class="form-label">Baseline Start Date</label>
-                                        <input type="date" class="form-control " id="baselineStartDate" required>
-
-                                        <label for="baselineEndDate" class="form-label">Baseline End Date</label>
-                                        <input type="date" class="form-control " id="baselineEndDate" required>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="baselineChoice"
-                                                id="chooseSuggestedBaseline" checked>
-                                            <label class="form-check-label" for="chooseSuggestedBaseline">
-                                                Use Suggested Baseline (dates above)
-                                            </label>
+                                <div class="container-lg">
+                                    <div class="row g-3">
+                                        <p><strong>Determine the Baseline period for the outage.</strong>
+                                        </p>In our standard contract,
+                                        we define this as a 3-week period immediately before the outage.
+                                        </p>
+                                        <p>
+                                            However, in different cases this may not work well; for longer outages, or
+                                            shorter
+                                            outages. Generally, we want to compare the outage period to 3+ times the
+                                            same
+                                            length
+                                            of
+                                            period where they were tracking. (This ensures a smoother / averaged
+                                            estimate.)
+                                        </p>
+                                        <p>
+                                            Below we've selected the default baseline period. If you wish to use
+                                            different
+                                            Dates, please specify in the date inserts below:</p>
+                                        <div class="alert text-center alert-danger" id="baselineDates" role="alert">
+                                            <div class="spinner-border" role="status">
+                                                <span class="sr-only"></span>
+                                            </div>
                                         </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="baselineChoice"
-                                                id="chooseNewBaseLine">
-                                            <label class="form-check-label" for="chooseNewBaseLine">
-                                                Use New Baseline (selected dates)
-                                            </label>
+                                        <p>If the above dates are insufficient, please click below, and want to choose
+                                            new
+                                            dates. click below</p>
+                                        <div class='d-grid gap-2 col-6 mx-auto'>
+                                            <button class='btn btn-secondary' onclick='show_new_baseline()'>Select
+                                                Different
+                                                Dates</button>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    <div class="row collapse" id="newBaseLineSelection">
+                                        <div class='d-grid gap-2 col-8 mx-auto'>
+                                            <label for="baselineStartDate" class="form-label">Baseline Start
+                                                Date</label>
+                                            <input type="date" class="form-control " id="baselineStartDate" required>
+
+                                            <label for="baselineEndDate" class="form-label">Baseline End Date</label>
+                                            <input type="date" class="form-control " id="baselineEndDate" required>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="baselineChoice"
+                                                    id="chooseSuggestedBaseline" checked>
+                                                <label class="form-check-label" for="chooseSuggestedBaseline">
+                                                    Use Suggested Baseline (dates above)
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="baselineChoice"
+                                                    id="chooseNewBaseLine">
+                                                <label class="form-check-label" for="chooseNewBaseLine">
+                                                    Use New Baseline (selected dates)
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <h5>Select Commission Option</h5>
+                                        <div class="col-5 ">
+                                            <p> When the Batch Sales report is submitted, the Affiliate's base
+                                                commission
+                                                will be applied to all
+                                                submitted transactions. For this report, you can choose to use one base
+                                                commission rate, which will be
+                                                applied to all Affiliates in the Affiliate Table.</p>
+                                            <p>Alternatively, you can download the Merchant's Active Affiliates to apply
+                                                the
+                                                Affiliate's current
+                                                commission rate to the report.</p>
+                                        </div>
+                                        <div class="col-5 ">
+                                            <p>Upload list of active affiliates from the Active Affiliates tab found on
+                                                the
+                                                homepage. This will set the correct
+                                                commission rates in the estimate.</p>
+
+                                            <label for="AffCommission" class="form-label"> Use one Base Commission for
+                                                All
+                                                Affiliates</label>
+                                            <div class="input-group ">
+                                                <div class="input-group-text">
+                                                    <input class="max-width form-check-input mt-0" type="radio"
+                                                        id="uniformBaseCommission" name="AffCommission"
+                                                        value="universal_rate">
+                                                </div>
+                                                <input type="text" class="align-right"
+                                                    id='universal_affiliate_commission' value="0"
+                                                    requiredclass="form-inline">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                            <label for="AffCommission" class="form-label"> Upload Affiliate Commission
+                                                rates</label>
+                                            <div class="input-group max-width ">
+                                                <div class="input-group-text">
+                                                    <input class="max-width form-check-input mt-0" type="radio"
+                                                        id="individualBaseCommission" name="AffCommission"
+                                                        value="individual_rate"
+                                                        aria-label="Radio button for following text input">
+                                                </div>
+                                                <input class="form-inline alert-danger" type="file"
+                                                    onchange='read_file(this)' id="affiliateFormFile">
+                                            </div>
+                                        </div><br>
+                                        <hr>
+                                        <div class='col'></div>
+
+                                        <p>To find the Active Affiliates report, Log in as the Merchant on the Dashboard
+                                            and
+                                            navigate:
+                                        </p>
+                                        <p><strong> Affiliates > Affiliate
+                                                Program Applications > Affiliate
+                                                Status: ACTIVE > Download Affiliates (button) </strong>
+                                        </p>
+                                        <p>Please download as a .CSV file.</p>
+                                    </div>
+                                    <hr>
+                                    <div class="row ">
+                                        <p>
+                                            <button class="btn btn-sm btn-secondary" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#advanced_settings"
+                                                aria-expanded="false" aria-controls="advanced_settings">
+                                                Advanced Report Settings
+                                            </button>
+                                        </p>
+                                    </div>
+                                    <div class="collapse" id="advanced_settings">
+                                        <div class="card card-body">
+                                            <div class="row small">
+                                                <div class="col-sm-6">
+                                                    <p>Advanced Settings</p>
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input " type="checkbox"
+                                                            id="display_aff_outage_commission">
+                                                        <label class="form-check-label"
+                                                            for="display_aff_outage_commission">Display
+                                                            Affiliate commission earned during the outage.</label>
+                                                    </div>
+                                                    <div class="form-check form-switch">
+
+                                                        <input class="form-check-input " disabled type="checkbox"
+                                                            id="flexSwitchCheckChecked">
+                                                        <label class="form-check-label"
+                                                            for="flexSwitchCheckChecked">Account
+                                                            for
+                                                            EACH Affiliate's earned commission during the
+                                                            outage.</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="mb-3">
+                                                        <label for="report_notes" class="form-label">Report
+                                                            Notes:</label>
+                                                        <textarea class="form-control" id="report_notes"
+                                                            rows="3"></textarea>
+
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <hr>
-                                </div>
-                                <div class="row justify-content-center">
-                                    <h5>Select Commission Option</h5>
-                                    <div class="col-5 ">
-                                        <p> When the Batch Sales report is submitted, the Affiliate's base commission
-                                            will be applied to all
-                                            submitted transactions. For this report, you can choose to use one base
-                                            commission rate, which will be
-                                            applied to all Affiliates in the Affiliate Table.</p>
-                                        <p>Alternatively, you can download the Merchant's Active Affiliates to apply the
-                                            Affiliate's current
-                                            commission rate to the report.</p>
-                                    </div>
-                                    <div class="col-5 ">
-                                        <p>Upload list of active affiliates from the Active Affiliates tab found on the
-                                            homepage. This will set the correct
-                                            commission rates in the estimate.</p>
-
-                                        <label for="AffCommission" class="form-label"> Use one Base Commission for All
-                                            Affiliates</label>
-                                        <div class="input-group ">
-                                            <div class="input-group-text">
-                                                <input class="max-width form-check-input mt-0" type="radio"
-                                                    id="uniformBaseCommission" name="AffCommission"
-                                                    value="universal_rate">
-                                            </div>
-                                            <input type="text" class="align-right" id='universal_affiliate_commission'
-                                                value="0" requiredclass="form-inline">
-                                            <span class="input-group-text">%</span>
+                                    <div class='row'>
+                                        <div class="d-grid gap-2 col-6 mx-auto">
+                                            <button class="btn btn-primary  " id='secondSubmit'
+                                                onclick='validateSecondStep()'>
+                                                To
+                                                Submit
+                                                Vaules</button>
                                         </div>
-                                        <label for="AffCommission" class="form-label"> Upload Affiliate Commission
-                                            rates</label>
-                                        <div class="input-group max-width ">
-                                            <div class="input-group-text">
-                                                <input class="max-width form-check-input mt-0" type="radio"
-                                                    id="individualBaseCommission" name="AffCommission"
-                                                    value="individual_rate"
-                                                    aria-label="Radio button for following text input">
-                                            </div>
-                                            <input class="form-inline alert-danger" type="file"
-                                                onchange='read_file(this)' id="affiliateFormFile">
+                                        <div id='hidebutton1' class="d-grid gap-2  col-6 mx-auto">
+                                            <button class="btn disabled btn-success" id='SecondStepComplete'
+                                                type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                                                onclick='second_report()' aria-expanded="false"
+                                                aria-controls="collapseThree">BUILD TABLES</button>
                                         </div>
-                                    </div><br>
-                                    <hr>
-                                    <div class='col'></div>
-
-                                    <p>To find the Active Affiliates report, Log in as the Merchant on the Dashboard and
-                                        navigate:
-                                    </p>
-                                    <p><strong> Affiliates > Affiliate
-                                            Program Applications > Affiliate
-                                            Status: ACTIVE > Download Affiliates (button) </strong>
-                                    </p>
-                                    <p>Please download as a .CSV file.</p>
-                                </div>
-                                <hr>
-                                <div class="row ">
-                                    <p>
-                                        <button class="btn btn-sm btn-secondary" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#advanced_settings" aria-expanded="false"
-                                            aria-controls="advanced_settings">
-                                            Advanced Report Settings
-                                        </button>
-                                    </p>
-                                </div>
-                                <div class="collapse" id="advanced_settings">
-                                    <div class="card card-body">
-                                        <div class="row small">
-                                            <div class="col-sm-6">
-                                                <p>Advanced Settings</p>
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input " type="checkbox"
-                                                        id="display_aff_outage_commission">
-                                                    <label class="form-check-label"
-                                                        for="display_aff_outage_commission">Display
-                                                        Affiliate commission earned during the outage.</label>
-                                                </div>
-                                                <div class="form-check form-switch">
-
-                                                    <input class="form-check-input " disabled type="checkbox"
-                                                        id="flexSwitchCheckChecked">
-                                                    <label class="form-check-label" for="flexSwitchCheckChecked">Account
-                                                        for
-                                                        EACH Affiliate's earned commission during the
-                                                        outage.</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="mb-3">
-                                                    <label for="report_notes" class="form-label">Report
-                                                        Notes:</label>
-                                                    <textarea class="form-control" id="report_notes"
-                                                        rows="3"></textarea>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class='row'>
-                                    <div class="d-grid gap-2 col-6 mx-auto">
-                                        <button class="btn btn-primary  " id='secondSubmit'
-                                            onclick='validateSecondStep()'>
-                                            To
-                                            Submit
-                                            Vaules</button>
-                                    </div>
-                                    <div id='hidebutton1' class="d-grid gap-2  col-6 mx-auto">
-                                        <button class="btn disabled btn-success" id='SecondStepComplete' type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                            onclick='second_report()' aria-expanded="false"
-                                            aria-controls="collapseThree">BUILD TABLES</button>
                                     </div>
                                 </div>
                             </div>
@@ -311,14 +335,16 @@
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingThree">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <button class="accordion-button btn-secondary collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false"
+                                aria-controls="collapseThree">
                                 Outage Estimate Report
                             </button>
                         </h2>
                         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
                             data-bs-parent="#outage-accordian">
                             <div class="accordion-body">
+                                <!-- <div class="container-lg"></div> -->
                                 <div class="container" id="report_pdf">
                                     <div class="row align-top">
                                         <div class="col">

@@ -57,7 +57,7 @@ function password_check() {
 function use_local_storage() {
     let x = window.localStorage.test;
     document.getElementById('password_input').value = x;
-    console.log(x);
+    console.log("used local storage to populate API key");
 };
 function updateByID(id, text) {
     document.getElementById(id).innerHTML = text
