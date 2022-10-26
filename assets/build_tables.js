@@ -44,6 +44,7 @@ function buildOutageTable() {
     table.rows[7].cells[1].classList.add("table-primary");
 };
 function buildAffiliateTable() {
+
     var table = document.getElementById('affTable');
     if (table.innerHTML) { table.innerHTML = '' };
     document.getElementById("secondSubmit").innerHTML = "Click to Update Table";
@@ -53,6 +54,7 @@ function buildAffiliateTable() {
     var tr = document.createElement('tr');
     var arrheader = ['Affiliate ID', 'Affiliate Name', 'Click Throughs', 'Percentage based on Clicks', 'Tracked Sales during the outage', 'Estimated Sales by AOV, and Conversion', 'Estimated Sales by Click Percentage', 'Average of Two Sales Figures', 'Estimated Affiliate Commission', 'Estimated Network Commission'];
     affarr = affiliates.slice(0, (merchant.affiliate_count));
+    get_website_ids();
     totals = {
         clicks: 0,
         estimatedSalesbyAOV: 0,
@@ -108,7 +110,7 @@ function buildAffiliateTable() {
         this_affiliate.push(affarr[i].Click_Throughs);
         this_affiliate.push((percentageBasedOnClicks * 100).toFixed(2) + "%");
         this_affiliate.push(affarr[i].Sales);
-        this_affiliate.push(toUSD(affarr[i].estimatedAOV));   
+        this_affiliate.push(toUSD(affarr[i].estimatedAOV));
         this_affiliate.push(toUSD(estimatedSalesBasedOnPercent));
         this_affiliate.push(toUSD(affarr[i].salesAverage));
         this_affiliate.push(toUSD(estimatedCommission));
@@ -144,7 +146,6 @@ function buildAffiliateTable() {
     c1.colSpan = '2';
     c3.colSpan = '2';
     if (document.getElementById("display_aff_outage_commission").checked) { c4.colSpan = '2' };
-
     footer.classList.add('table-secondary')
     let t2 = document.createTextNode(totals.clicks);
     let t3 = document.createTextNode(toUSD(totals.estimatedSalesbyAOV));
@@ -177,19 +178,18 @@ function buildAffiliateTable() {
 
     if (document.getElementById("display_aff_outage_commission").checked) { }
     else { hide_column(table.id, 4); }
-    
-}
+
+};
 function add_borders(table_id, column) {
     var table = document.getElementById(table_id);
-    console.log(table.rows, table_id,table.tHead)
+    console.log(table.rows, table_id, table.tHead)
     var totalRowCount = table.rows.length - 1;
     console.log(totalRowCount)
     table.tHead.rows[0].cells[column].style.cssText += 'border-left-color :blue'
     for (i = 0; i < totalRowCount; i++) {
-          table.rows[i].cells[column].style.cssText += 'border-left-width :3px'
+        table.rows[i].cells[column].style.cssText += 'border-left-width :3px'
     }
-}
-
+};
 function hide_column(table_id, column) {
     var table = document.getElementById(table_id);
     console.log(table, table_id)
@@ -199,4 +199,16 @@ function hide_column(table_id, column) {
         console.log(table.rows[i].cells[column].innerHTML)
         table.rows[i].cells[column].hidden = true
     }
+};
+function get_website_ids() {
+    affarr.forEach(affiliate => {
+        fetch('https://classic.avantlink.com/api.php?module=AdminReport&auth_key=' + API_KEY + '&affiliate_id=' + affiliate.Affiliate_Id + '&date_begin=' + startDate + '&date_end=' + endDate + '&affiliate_group_id=0&report_id=' + 20 + '&output=xml')
+            .then(response => response.text())
+            .then(str =>
+                xmlDoc = new window.DOMParser().parseFromString(str, "text/xml"))
+            .then(data => {
+                xmlDoc = data.getElementsByTagName('Table1');
+                affiliate.Website_Id = (xmlDoc[0].childNodes[2].textContent)
+            })
+    })
 }
