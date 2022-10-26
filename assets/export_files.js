@@ -21,9 +21,10 @@ function buildBatchSales() {
     ];
     let today = (new Date())
     affarr.forEach(affiliate => {
-        let newArr = [affiliate.Affiliate_Id, ('outage_estimate_' + today + "_" + affiliate.Affiliate_Id), '', Number(affiliate.salesAverage.toFixed(2)), '']
+        let newArr = [affiliate.Website_Id, ('outage_estimate_' + today + "_" + affiliate.Affiliate_Id), '', Number(affiliate.salesAverage.toFixed(2)), '']
         rows.push(newArr);
-    });
+    })
+
     let csvContent = "data:text/csv;charset=utf-8,";
     rows.forEach(function (rowArray) {
         let row = rowArray.join(",");
@@ -35,4 +36,4 @@ function buildBatchSales() {
     link.setAttribute("download", ("Batch-Sales-Document for " + merchant.name + "_" + outage.dates));
     document.body.appendChild(link); // Required for FF
     link.click(); // This will download the data file named ("Batch_Sales_"+merchant.name+"_"+outage.dates).
-};
+}
