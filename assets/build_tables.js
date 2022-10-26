@@ -144,7 +144,6 @@ function buildAffiliateTable() {
     c1.colSpan = '2';
     c3.colSpan = '2';
     if (document.getElementById("display_aff_outage_commission").checked) { c4.colSpan = '2' };
-
     footer.classList.add('table-secondary')
     let t2 = document.createTextNode(totals.clicks);
     let t3 = document.createTextNode(toUSD(totals.estimatedSalesbyAOV));
@@ -178,7 +177,7 @@ function buildAffiliateTable() {
     if (document.getElementById("display_aff_outage_commission").checked) { }
     else { hide_column(table.id, 4); }
     
-}
+};
 function add_borders(table_id, column) {
     var table = document.getElementById(table_id);
     console.log(table.rows, table_id,table.tHead)
@@ -188,8 +187,7 @@ function add_borders(table_id, column) {
     for (i = 0; i < totalRowCount; i++) {
           table.rows[i].cells[column].style.cssText += 'border-left-width :3px'
     }
-}
-
+};
 function hide_column(table_id, column) {
     var table = document.getElementById(table_id);
     console.log(table, table_id)
@@ -199,4 +197,4 @@ function hide_column(table_id, column) {
         console.log(table.rows[i].cells[column].innerHTML)
         table.rows[i].cells[column].hidden = true
     }
-}
+};
