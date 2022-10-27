@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -344,12 +345,11 @@
                         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
                             data-bs-parent="#outage-accordian">
                             <div class="accordion-body">
-                                <!-- <div class="container-lg"></div> -->
                                 <div class="container" id="report_pdf">
                                     <div class="row align-top">
                                         <div class="col">
                                             <table id='merchantTable' class="table  table-striped centered table-sm">
-                                                <tbody>
+                                                <tbody style="font-size: small;">
                                                     <thead>
                                                         <tr>
                                                             <th id="r_merchant_name">Merchant Name</th>
@@ -370,7 +370,8 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <p class='reportFont'>Compares the outage period with a statistically
+                                            <p class='reportFont' style="font-size: x-small;">Compares the outage period
+                                                with a statistically
                                                 similar "baseline" period
                                                 from the past. Per-affiliate sale estimations calculated based on
                                                 affiliate
@@ -379,8 +380,8 @@
                                                 rate;
                                                 and the average of the two methods. Any actual sales during the outage
                                                 period are removed from the calculations.</p>
-                                            <br>
-                                            <ul class="list-group list-group-flush">
+
+                                            <ul style="font-size: x-small;" class="list-group list-group-flush">
                                                 <li class="list-group-item"><strong>In the Table Below:</strong>
                                                 </li>
                                                 <li id='r_a_count' class="list-group-item">Notes about the Affiliates
@@ -391,7 +392,7 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div class="col" style="font-size: small;">
+                                        <div class="col" style="font-size: x-small;">
                                             <table id='outageTable'
                                                 class="table table-sm table-bordered border-primary baseData">
                                                 <tbody> </tbody>
