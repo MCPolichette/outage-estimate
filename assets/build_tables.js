@@ -175,20 +175,31 @@ function buildAffiliateTable() {
     //Advanced Display Actions (AFTER BUILDING)
     add_borders(table.id, 5);
     add_borders(table.id, 7);
-
+    table_border(table.id)
+    // document.getElementById('affTable').style.cssText += 'border-width :3px;  border-color: blue'
     if (document.getElementById("display_aff_outage_commission").checked) { }
     else { hide_column(table.id, 4); }
 
 };
+function table_border(table_id) {
+    var table = document.getElementById(table_id);
+    var totalRowCount = table.rows.length - 1;
+    for (i = 0; i < totalRowCount; i++) {
+        table.rows[i].cells[0].style.cssText += 'border-left-width :5px;  border-style:solid; border-left-color: #cfe2ff';
+        table.rows[i].cells[9].style.cssText += 'border-right-width :5px;  border-style:solid; border-right-color: #cfe2ff'
+    }
+}
 function add_borders(table_id, column) {
     var table = document.getElementById(table_id);
-    console.log(table.rows, table_id, table.tHead)
     var totalRowCount = table.rows.length - 1;
     console.log(totalRowCount)
-    table.tHead.rows[0].cells[column].style.cssText += 'border-left-color :blue'
     for (i = 0; i < totalRowCount; i++) {
-        table.rows[i].cells[column].style.cssText += 'border-left-width :3px'
+        table.rows[i].cells[5].style.cssText += 'border-left-width :5px;  border-style:solid; border-left-color: #cfe2ff'
+        table.rows[i].cells[6].style.cssText += 'border-right-width :5px;  border-style:solid; border-right-color: #cfe2ff'
     }
+    table.tHead.rows[0].cells[5].style.cssText += 'border-left-color :#cfe2ff ; border-left-width: 5px; border-left-style: solid '
+    table.tHead.rows[0].cells[6].style.cssText += 'border-right-color :#cfe2ff ; border-right-width: 5px; border-right-style: solid '
+
 };
 function hide_column(table_id, column) {
     var table = document.getElementById(table_id);
@@ -196,7 +207,6 @@ function hide_column(table_id, column) {
     var totalRowCount = table.rows.length - 1;
     console.log(totalRowCount)
     for (i = 0; i < totalRowCount; i++) {
-        console.log(table.rows[i].cells[column].innerHTML)
         table.rows[i].cells[column].hidden = true
     }
 };

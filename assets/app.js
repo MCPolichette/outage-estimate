@@ -50,7 +50,7 @@ function password_check() {
             document.getElementById('first_display').remove();
             break
         default:
-            alert("NOPE")
+            alert("This key is an unacceptable value")
             break
     };
 };

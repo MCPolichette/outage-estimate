@@ -1,4 +1,3 @@
-
 function generatePDF() {
     console.log("Make a PDF")
     // Choose the element id which you want to export.
@@ -20,12 +19,12 @@ function buildBatchSales() {
     const rows = [
         ['Affiliate Data', 'Transaction ID', 'Product ID/SKU', 'Sale Item Amount', 'Sale Item Quantity'],
     ];
-    let today = (new Date())
+    let date = new Date();
+    let today = (date).getDate() + "." + (date.getMonth() + 1);
     affarr.forEach(affiliate => {
         let newArr = [affiliate.Website_Id, ('outage_estimate_' + today + "_" + affiliate.Affiliate_Id), '', Number(affiliate.salesAverage.toFixed(2)), '']
         rows.push(newArr);
     })
-
     let csvContent = "data:text/csv;charset=utf-8,";
     rows.forEach(function (rowArray) {
         let row = rowArray.join(",");
@@ -37,4 +36,4 @@ function buildBatchSales() {
     link.setAttribute("download", ("Batch-Sales-Document for " + merchant.name + "_" + outage.dates));
     document.body.appendChild(link); // Required for FF
     link.click(); // This will download the data file named ("Batch_Sales_"+merchant.name+"_"+outage.dates).
-}
+};
