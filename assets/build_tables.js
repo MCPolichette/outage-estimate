@@ -20,6 +20,7 @@ function buildMerchantTable() {
 };
 function buildOutageTable() {
     var table = document.getElementById("outageTable");
+    outage.dates = (DateToString(outage.date_start_display) + " to " + DateToString(outage.date_end_display))
     table.innerHTML = '';
     table.style.textAlign = 'right'
     build2columns(table, 0, "Baseline Dates :", (DateToString(baseline.date_start_display) + " to " + DateToString(baseline.date_end_display)));
@@ -29,7 +30,7 @@ function buildOutageTable() {
     build2columns(table, 4, "Conversion Rate :", ((baseline.conversion_rate * 100).toFixed(2) + " %"))
     build2columns(table, 5, "AOV :", (toUSD(baseline.aov)))
     build2columns(table, 6, "", "")
-    build2columns(table, 7, "Outage Dates :", (DateToString(outage.date_start_display) + " to " + DateToString(outage.date_end_display)));
+    build2columns(table, 7, "Outage Dates :", outage.dates);
     build2columns(table, 8, "Clicks :", outage.total_clicks);
     build2columns(table, 9, "Estimated Sales:", (toUSD(outage.estimated_sales)));
     build2columns(table, 10, "Tracked Sales :", (toUSD(outage.total_sales)));

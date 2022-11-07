@@ -20,7 +20,7 @@ function buildBatchSales() {
         ['Affiliate Data', 'Transaction ID', 'Product ID/SKU', 'Sale Item Amount', 'Sale Item Quantity'],
     ];
     let date = new Date();
-    let today = (date).getDate() + "." + (date.getMonth() + 1);
+    let today = (date.getMonth() + 1) + "." + (date).getDate();
     affarr.forEach(affiliate => {
         let newArr = [affiliate.Website_Id, ('outage_estimate_' + today + "_" + affiliate.Affiliate_Id), '', Number(affiliate.salesAverage.toFixed(2)), '']
         rows.push(newArr);
