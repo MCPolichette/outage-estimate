@@ -14,6 +14,16 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
     <title>AvantLink Outage-Estimate</title>
     <link rel="stylesheet" type="text/css" media="screen" href="style/style.css" />
+    <script>
+    window.onload = function() {
+      // Check if the value exists in the local storage
+      if (localStorage.test) {
+        // Retrieve the value from local storage
+        var storedValue = localStorage.test;
+        // Set the value in the text field
+        document.getElementById("password_input").value = storedValue;
+      }
+    };</script>
 </head>
 
 <body>
@@ -69,18 +79,15 @@
                                                 FITNESS
                                                 VALUES</button>
                                         </div>
-                                        <h4>Outage Estimate Testing</h4>
-
-
+                                        <h2>Outage Estimate</h2>
                                         <div class="col-md-5">
                                             <label for="merchantId" class="form-label">Merchant ID </label>
                                             <input type="text" class="form-control " id="merchantId" value="" required>
-                                            <label for="merchantName" class="form-label">Merchant Name</label>
-                                            <input type="text" class="form-control" id="merchantName" value="" required>
                                             <br><br>
                                             <div class="input-group input-group-sm">
-                                                <label for="networkCommission" class="form-label">Network
-                                                    Commission: </label>
+                                                <label for="networkCommission" class="form-label">
+                                                    NetworkCommission: 
+                                                </label>
                                                 <input type="text" style='width: 2em; margin-left: 1em'
                                                     class="align-right" id="networkCommission" value=""
                                                     requiredclass="form-control"
@@ -122,17 +129,17 @@
                                             </span>
                                             <br>
                                         </div>
-                                        <div class="d-grid gap-2 col-6 mx-auto">
-                                            <button class="btn btn-primary  " id='firstSubmit'
+                                        <div class="" hidden>
+                                            <button class="btn btn-primary  "  hidden id='firstSubmit'
                                                 onclick='validateFirstStep()'>
                                                 To
                                                 Submit
                                                 Values</button>
                                         </div>
                                         <div id='hidebutton1' class="d-grid gap-2  col-6 mx-auto">
-                                            <button class="btn disabled btn-success" id='firstStepComplete'
+                                            <button class="btn  btn-success" id='firstStepComplete'
                                                 type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                                onclick='first_step_report()' aria-expanded="false"
+                                                onclick='validateFirstStep()' aria-expanded="false"
                                                 aria-controls="collapseTwo">NEXT
                                                 STEP</button>
                                         </div>
