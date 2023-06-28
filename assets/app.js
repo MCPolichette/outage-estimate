@@ -129,7 +129,6 @@ function update_base_data() {
 	outage.date_end = document.getElementById("outageEndDate").value;
 	outage.date_start_display = new Date(outage.date_start.replace(/-/g, "/"));
 	outage.date_end_display = new Date(outage.date_end.replace(/-/g, "/"));
-	// merchant.name = document.getElementById('merchantName').value;
 	merchant.id = document.getElementById("merchantId").value;
 	merchant.affiliate_count = Number(
 		document.getElementById("affiliateCount").value

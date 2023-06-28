@@ -4,10 +4,11 @@ function build2columns(table, row, col1, col2) {
 	var cell2 = (row.insertCell(1).innerHTML = col2);
 }
 function buildMerchantTable() {
+	console.log(outage);
 	let click_percent =
 		((totals.clicks / outage.total_clicks) * 100).toFixed(2) + "%";
 	var table = document.getElementById("merchantTable");
-	// document.getElementById('r_merchant_name').innerHTML = merchant.name;
+	document.getElementById("r_merchant_name").innerHTML = merchant.name;
 	document.getElementById("r_merchant_id").innerHTML = merchant.id;
 	document.getElementById("r_date").innerHTML = todays_date;
 	document.getElementById("r_nc_commission").innerHTML = merchant.nc_display;
@@ -131,12 +132,14 @@ function buildAffiliateTable() {
 	console.log(affarr);
 	for (var i = 0; i < affarr.length; i++) {
 		let this_affiliate = [];
+		console.log(affarr[i].commissionRate);
 		affarr[i].estimatedAOV =
 			baseline.conversion_rate * baseline.aov * affarr[i].clicks;
 		if (affarr[i].commissionRate) {
 			totals.commission_rates.push(affarr[i].commissionRate);
 		} else {
 			console.log(i);
+
 			affarr[i].commissionRate = 0.01;
 			console.log(
 				affarr[i].Affiliate + " Does not have a commission rate"

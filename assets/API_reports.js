@@ -143,34 +143,34 @@ function reportStep2(xml, report_id) {
 			break;
 	}
 }
-function validateMerchant(report) {
-	startDate = report.startDate;
-	endDate = report.endDate;
-	report_id = report.report_id;
+// function validateMerchant(report) {
+// 	startDate = report.startDate;
+// 	endDate = report.endDate;
+// 	report_id = report.report_id;
 
-	fetch(
-		"https://classic.avantlink.com/api.php?module=AdminReport&auth_key=" +
-			API_KEY +
-			"&merchant_id=" +
-			merchant.id +
-			"&merchant_parent_id=0&affiliate_id=0&website_id=0&date_begin=" +
-			startDate +
-			"&date_end=" +
-			endDate +
-			"&affiliate_group_id=0&report_id=" +
-			report_id +
-			"&output=xml"
-	)
-		.then((response) => response.text())
-		.then(
-			(str) =>
-				(xmlDoc = new window.DOMParser().parseFromString(
-					str,
-					"text/xml"
-				))
-		)
-		.then((data) =>
-			// console.log(data)
-			reportStep2(data, report_id)
-		);
-}
+// 	fetch(
+// 		"https://classic.avantlink.com/api.php?module=AdminReport&auth_key=" +
+// 			API_KEY +
+// 			"&merchant_id=" +
+// 			merchant.id +
+// 			"&merchant_parent_id=0&affiliate_id=0&website_id=0&date_begin=" +
+// 			startDate +
+// 			"&date_end=" +
+// 			endDate +
+// 			"&affiliate_group_id=0&report_id=" +
+// 			report_id +
+// 			"&output=xml"
+// 	)
+// 		.then((response) => response.text())
+// 		.then(
+// 			(str) =>
+// 				(xmlDoc = new window.DOMParser().parseFromString(
+// 					str,
+// 					"text/xml"
+// 				))
+// 		)
+// 		.then((data) =>
+// 			// console.log(data)
+// 			reportStep2(data, report_id)
+// 		);
+// }

@@ -30,6 +30,7 @@ function validateSecondStep() {
 	let commission_check = document.querySelector(
 		'input[name="AffCommission"]:checked'
 	);
+	console.log(commission_check);
 	if (commission_check)
 		switch (commission_check.value) {
 			case "universal_rate":
@@ -45,7 +46,11 @@ function validateSecondStep() {
 						).value
 					) / 100;
 				if (merchant.universal_commission) {
+					outage.commission_rates = merchant.universal_commission;
+					document.getElementById("r_ac_commission").innerHTML =
+						merchant.universal_commission;
 					affiliates.forEach((affiliate) => {
+						console.log(merchant.universal_commission);
 						affiliate.commissionRate =
 							merchant.universal_commission;
 					});
@@ -91,6 +96,6 @@ function validationCheck(arr, btn_id, new_button) {
 		btn.classList.remove("collapse");
 		document.getElementById(btn_id).innerHTML = "Click to Update";
 		first_step_report();
-		btn.classList.add("disabled");
+		btn.classList.remove("disabled");
 	}
 }

@@ -380,17 +380,23 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <p class='reportFont' style="font-size: x-small;">Compares the outage period
-                                                with a statistically
-                                                similar "baseline" period
-                                                from the past. Per-affiliate sale estimations calculated based on
-                                                affiliate
-                                                clickthroughs: est. total program sales times affiliate clicks / overall
-                                                clicks; affiliate clicks times program's baseline AOV and conversion
-                                                rate;
-                                                and the average of the two methods. Any actual sales during the outage
-                                                period are removed from the calculations.</p>
-                                            <ul style="font-size: x-small;" class="list-group list-group-flush">
+                                            <p class='reportFont' style="font-size: x-small;">
+                                            This report compares the duration of the outage with a similar period in the past referred to as the 'baseline' period.</p> 
+                                            <p class='reportFont' style="font-size: x-small;">To estimate the sales made by each affiliate, we consider their clickthrough rates. This estimation is calculated by multiplying the estimated total program sales with the ratio of affiliate clicks to overall clicks. Additionally, we factor in the baseline average order value (AOV) and conversion rate of the program, either by multiplying the affiliate clicks with the program's baseline AOV and conversion rate or by taking the average of both methods. Any actual sales that occurred during the outage period are excluded from these calculations."
+                                            </p>
+                                           
+                                        </div>
+                                        <div class="col" style="font-size: x-small;">
+                                            <table id='outageTable'
+                                                class="table table-sm table-bordered border-primary baseData">
+                                                <tbody> </tbody>
+                                            </table>
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12" id="affiliateTable">
+                                             <ul style="font-size: x-small;" class="list-group list-group-flush">
                                                 <li class="list-group-item"><strong>In the Table Below:</strong>
                                                 </li>
                                                 <li id='r_a_count' class="list-group-item">Notes about the Affiliates
@@ -400,20 +406,21 @@
                                                 <li id='r_note2' class="list-group-item">
                                                 </li>
                                             </ul>
+                                            <p> Break down of Affiliates with most clicks during the outage.</p>
+                                            <table style="font-size:x-small; font-weight: bold; text-align:right"
+                                                class="table  align-middle table-bordered table-sm  border-primary"
+                                                id="affTable"></table>
                                         </div>
-                                        <div class="col" style="font-size: x-small;">
-                                            <table id='outageTable'
-                                                class="table table-sm table-bordered border-primary baseData">
-                                                <tbody> </tbody>
-                                            </table>
-                                            <table id='totals_table' class="table table-striped">
+                                    </div>
+                                    <div class="row">
+                                         <table style="font-size: x-small; text-align:right" id='totals_table' class="table table-striped">
                                                 <thead>
                                                     <tr>
                                                         <th>Estimated Totals</th>
                                                         <!-- <th id="aaa">Merchant ID</th> -->
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody >
                                                     <tr>
                                                         <td>Affiliate Commission</td>
                                                         <td id="r_estimated_ac">xx</td>
@@ -428,14 +435,6 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </div>
-                                        <hr>
-                                        <div class="col-12" id="affiliateTable">
-                                            <h6> Break down of Affiliates with most clicks during the outage.</h6>
-                                            <table style="font-size:x-small; font-weight: bold; text-align:right"
-                                                class="table  align-middle table-bordered table-sm  border-primary"
-                                                id="affTable"></table>
-                                        </div>
                                     </div>
                                 </div>
 
