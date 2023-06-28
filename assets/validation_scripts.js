@@ -26,15 +26,15 @@ function validateSecondStep() {
 		baseline.date_end_display.setDate(baseline.date_end_display.getDate());
 		console.log(baseline);
 	}
-	console.log(date_check);
+	console.log("custom dates", date_check);
 	let commission_check = document.querySelector(
 		'input[name="AffCommission"]:checked'
 	);
-	console.log(commission_check);
+	console.log(commission_check.value);
 	if (commission_check)
 		switch (commission_check.value) {
 			case "universal_rate":
-				validationCheck(
+				softValidationCheck(
 					["universal_affiliate_commission"],
 					"secondSubmit",
 					"SecondStepComplete"
@@ -59,7 +59,7 @@ function validateSecondStep() {
 				}
 				break;
 			case "individual_rate":
-				validationCheck(
+				softValidationCheck(
 					["affiliateFormFile"],
 					"secondSubmit",
 					"SecondStepComplete"
@@ -96,6 +96,33 @@ function validationCheck(arr, btn_id, new_button) {
 		btn.classList.remove("collapse");
 		document.getElementById(btn_id).innerHTML = "Click to Update";
 		first_step_report();
+		btn.classList.remove("disabled");
+	}
+}
+
+//Lazy Solution to the EXTRA API call issue above.  I'll fix this if I OVERHAUL this report in the future
+function softValidationCheck(arr, btn_id, new_button) {
+	let arrCheck = 0;
+	arr.forEach((id) => {
+		if (document.getElementById(id).value) {
+			successify(id);
+		} else {
+			document.getElementById(id).classList.add("alert-danger");
+			arrCheck = 1;
+			let btn = document.getElementById(new_button);
+			console.log(btn);
+		}
+	});
+	console.log("Zero is good ==> " + arrCheck);
+	if (arrCheck) {
+		alert(
+			"Not all fields were populated correctly.  \n Please go back and try again"
+		);
+		btn.classList.remove("disabled");
+	} else {
+		let btn = document.getElementById(new_button);
+		btn.classList.remove("collapse");
+		document.getElementById(btn_id).innerHTML = "Click to Update";
 		btn.classList.remove("disabled");
 	}
 }

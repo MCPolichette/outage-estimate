@@ -132,7 +132,7 @@ function buildAffiliateTable() {
 	console.log(affarr);
 	for (var i = 0; i < affarr.length; i++) {
 		let this_affiliate = [];
-		console.log(affarr[i].commissionRate);
+		console.log(affarr[i]);
 		affarr[i].estimatedAOV =
 			baseline.conversion_rate * baseline.aov * affarr[i].clicks;
 		if (affarr[i].commissionRate) {
@@ -277,12 +277,16 @@ function add_borders(table_id, column) {
 		table.rows[i].cells[5].style.cssText +=
 			"border-left-width :5px;  border-style:solid; border-left-color: #cfe2ff";
 		table.rows[i].cells[6].style.cssText +=
-			"border-right-width :5px;  border-style:solid; border-right-color: #cfe2ff";
+			"border-right-width :5px;  border-style:solid; border-right-color: black";
+		table.rows[i].cells[7].style.cssText +=
+			"border-right-width :5px;  border-style:solid; border-right-color: black";
 	}
 	table.tHead.rows[0].cells[5].style.cssText +=
 		"border-left-color :#cfe2ff ; border-left-width: 5px; border-left-style: solid ";
 	table.tHead.rows[0].cells[6].style.cssText +=
-		"border-right-color :#cfe2ff ; border-right-width: 5px; border-right-style: solid ";
+		"border-right-color :#777e84 ; border-right-width: 5px; border-right-style: solid ";
+	table.rows[0].cells[7].style.cssText +=
+		"border-right-width :5px;  border-style:solid; border-right-color: #777e84";
 }
 function hide_column(table_id, column) {
 	var table = document.getElementById(table_id);
