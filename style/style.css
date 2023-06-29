@@ -1,14 +1,14 @@
 body {
-    background-image: url(../style/avantlink-ribbon.svg );
-    height: 100vh;
-    background-position: right;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    font-family: Roboto;
+	background-image: url(../style/avantlink-ribbon.svg);
+	height: 100vh;
+	background-position: right;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	font-family: Roboto;
 }
 
 #affTable {
-    border-color: blue;
-    border-width: 3px;
+	border-color: blue;
+	border-width: 3px;
 }

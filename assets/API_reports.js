@@ -19,7 +19,10 @@ function run_report(report) {
 		.then((response) => response.text())
 		.then(
 			(str) =>
-				(xmlDoc = new window.DOMParser().parseFromString(str, "text/xml"))
+				(xmlDoc = new window.DOMParser().parseFromString(
+					str,
+					"text/xml"
+				))
 		)
 		.then((data) =>
 			// console.log(data)
@@ -32,25 +35,30 @@ function reportStep2(xml, report_id) {
 		case 15: //Performance Summary by Affiliate for selected dates
 			affiliates = [];
 			xmlDoc = xml.getElementsByTagName("Table1");
+			merchant.name =
+				xmlDoc[0].getElementsByTagName(
+					"Merchant"
+				)[0].childNodes[0].nodeValue;
+			console.log("report for " + merchant.name);
 			for (let i = 0; i < xmlDoc.length; i++) {
 				affiliates.push({
 					Affiliate:
-						xmlDoc[i].getElementsByTagName("Affiliate")[0].childNodes[0]
-							.nodeValue,
+						xmlDoc[i].getElementsByTagName("Affiliate")[0]
+							.childNodes[0].nodeValue,
 					Click_Throughs:
-						xmlDoc[i].getElementsByTagName("Click_Throughs")[0].childNodes[0]
-							.nodeValue,
+						xmlDoc[i].getElementsByTagName("Click_Throughs")[0]
+							.childNodes[0].nodeValue,
 					Affiliate_Id:
-						xmlDoc[i].getElementsByTagName("Affiliate_Id")[0].childNodes[0]
-							.nodeValue,
+						xmlDoc[i].getElementsByTagName("Affiliate_Id")[0]
+							.childNodes[0].nodeValue,
 					Number_of_Sales:
-						xmlDoc[i].getElementsByTagName("Number_of_Sales")[0].childNodes[0]
-							.nodeValue,
-					Sales:
-						xmlDoc[i].getElementsByTagName("Sales")[0].childNodes[0].nodeValue,
+						xmlDoc[i].getElementsByTagName("Number_of_Sales")[0]
+							.childNodes[0].nodeValue,
+					Sales: xmlDoc[i].getElementsByTagName("Sales")[0]
+						.childNodes[0].nodeValue,
 					Conversion_Rate:
-						xmlDoc[i].getElementsByTagName("Conversion_Rate")[0].childNodes[0]
-							.nodeValue,
+						xmlDoc[i].getElementsByTagName("Conversion_Rate")[0]
+							.childNodes[0].nodeValue,
 				});
 			}
 			for (let i = 0; i < affiliates.length; i++) {
@@ -64,11 +72,13 @@ function reportStep2(xml, report_id) {
 					affiliates[i].Number_of_Sales.replaceAll(",", "")
 				);
 				if (affiliates[i].sales_amount > 0) {
-					outage.total_sales = outage.total_sales + affiliates[i].sales_amount;
+					outage.total_sales =
+						outage.total_sales + affiliates[i].sales_amount;
 				}
 				outage.total_sales_count =
 					outage.total_sales_count + affiliates[i].sales_count;
-				outage.total_clicks = outage.total_clicks + affiliates[i].clicks;
+				outage.total_clicks =
+					outage.total_clicks + affiliates[i].clicks;
 				// outage.average_sales_total = outage.total_sales / affiliates.length
 			}
 			affiliates.sort((a, b) => b.clicks - a.clicks);
@@ -77,7 +87,9 @@ function reportStep2(xml, report_id) {
 				(outage.total_sales / outage.total_sales_count).toFixed(2)
 			);
 			outage.total_sales = Number(outage.total_sales.toFixed(2));
-			document.getElementById("secondSubmit").classList.remove("disabled");
+			document
+				.getElementById("secondSubmit")
+				.classList.remove("disabled");
 			console.log(merchant);
 			console.log(outage);
 			console.log(baseline);

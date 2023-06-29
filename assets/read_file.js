@@ -37,7 +37,7 @@ function read_file(input) {
 					});
 				}
 				btn2();
-				console.log("Affiliates Updated?");
+				console.log("Affiliates Updated");
 				console.log(affiliates);
 				successify("affiliateFormFile");
 				merchant.affDoc = fileName;
