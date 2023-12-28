@@ -82,6 +82,8 @@ function reportStep2(xml, report_id) {
 				// outage.average_sales_total = outage.total_sales / affiliates.length
 			}
 			affiliates.sort((a, b) => b.clicks - a.clicks);
+			//COMMENT OUT BELOW.  this was for a one time case to remove a top outlier affiliate
+			// affiliates.shift();
 			// outage.conversion_rate = Number((outage.total_sales_count / outage.total_clicks)); //.toFixed(6) !?
 			outage.aov = Number(
 				(outage.total_sales / outage.total_sales_count).toFixed(2)
