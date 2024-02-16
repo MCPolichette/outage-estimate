@@ -2,7 +2,23 @@ function run_report(report) {
 	startDate = report.startDate;
 	endDate = report.endDate;
 	report_id = report.report_id;
+	let network = "";
+	switch (getSelectedValue()) {
+		case "CA":
+			console.log("CA");
+			network = "&filter_network=CA";
+			break;
+		case "US":
+			console.log("US");
 
+			break;
+		case "AU":
+			console.log("AU");
+			network = "&filter_network=AU";
+			break;
+		case "null":
+			alert("no network selected");
+	}
 	fetch(
 		"https://classic.avantlink.com/api.php?module=AdminReport&auth_key=" +
 			API_KEY +
@@ -14,7 +30,8 @@ function run_report(report) {
 			endDate +
 			"&affiliate_group_id=0&report_id=" +
 			report_id +
-			"&output=xml"
+			"&output=xml" +
+			network
 	)
 		.then((response) => response.text())
 		.then(
@@ -28,6 +45,21 @@ function run_report(report) {
 			// console.log(data)
 			reportStep2(data, report_id)
 		);
+}
+
+function getSelectedValue() {
+	var radios = document.getElementsByName("networkRadio");
+
+	for (var i = 0; i < radios.length; i++) {
+		if (radios[i].checked) {
+			var selectedValue = radios[i].value;
+			console.log("Selected Account Type:", selectedValue);
+			return selectedValue;
+		}
+	}
+	// Handle case when no radio button is selected
+	console.log("No Account Type selected");
+	return null;
 }
 
 function reportStep2(xml, report_id) {
