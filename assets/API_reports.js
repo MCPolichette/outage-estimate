@@ -65,6 +65,7 @@ function getSelectedValue() {
 function reportStep2(xml, report_id) {
 	switch (report_id) {
 		case 15: //Performance Summary by Affiliate for selected dates
+			console.log(xml);
 			affiliates = [];
 			xmlDoc = xml.getElementsByTagName("Table1");
 			merchant.name =

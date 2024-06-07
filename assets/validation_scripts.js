@@ -122,7 +122,8 @@ function softValidationCheck(arr, btn_id, new_button) {
 	} else {
 		let btn = document.getElementById(new_button);
 		btn.classList.remove("collapse");
-		document.getElementById(btn_id).innerHTML = "Click to Update";
+		document.getElementById(btn_id).innerHTML = "Refresh page to update";
+		document.getElementById(btn_id).classList.add("disabled");
 		btn.classList.remove("disabled");
 	}
 }

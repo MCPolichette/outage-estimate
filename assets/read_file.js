@@ -42,8 +42,8 @@ function read_file(input) {
 				successify("affiliateFormFile");
 				merchant.affDoc = fileName;
 			}
-			document.getElementById("affiliateReportFileName").innerHTML =
-				fileName;
+			// document.getElementById("affiliateReportFileName").innerHTML =
+			// 	fileName;
 		} else {
 			console.log("unidentified report");
 		}
