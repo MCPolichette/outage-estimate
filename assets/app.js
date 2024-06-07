@@ -76,19 +76,27 @@ function first_step_report() {
 	update_base_data();
 	todays_date = DateToString(new Date());
 	baseline.date_start_display = new Date(outage.date_start);
+
 	baseline.date_start_display.setDate(
-		baseline.date_start_display.getDate() - 21
+		baseline.date_start_display.getDate() - 20
 	);
 	baseline.date_end_display = new Date(outage.date_start);
 	baseline.date_end_display.setDate(baseline.date_end_display.getDate() - 1);
-	baseline.date_start = baseline.date_start_display
-		.toISOString()
-		.split("T")[0];
-	baseline.date_end = baseline.date_end_display.toISOString().split("T")[0];
 
+	// Format the dates to "YYYY-MM-DD"
+	function formatDateToYYYYMMDD(date) {
+		let year = date.getFullYear();
+		let month = (date.getMonth() + 1).toString().padStart(2, "0");
+		let day = date.getDate().toString().padStart(2, "0");
+		return `${year}-${month}-${day}`;
+	}
+
+	baseline.date_start = formatDateToYYYYMMDD(baseline.date_start_display);
+	baseline.date_end = formatDateToYYYYMMDD(baseline.date_end_display);
+	console.log(baseline);
 	document.getElementById("baselineStartDate").value = baseline.date_start;
 	document.getElementById("baselineEndDate").value = baseline.date_end;
-	//Displaying the suggested BaseLine.
+	// Displaying the suggested BaseLine.
 	updateByID(
 		"baselineDates",
 		DateToString(baseline.date_start_display) +
@@ -100,7 +108,7 @@ function first_step_report() {
 		startDate: outage.date_start,
 		endDate: outage.date_end,
 		report_id: 15,
-	}); //Performance Summary for Outage report.
+	}); // Performance Summary for Outage report.
 }
 function second_report() {
 	update_base_data();
